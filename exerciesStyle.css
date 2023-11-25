@@ -1,0 +1,30 @@
+* {
+    font-family: 'Ubuntu';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #212121;
+    color: #F1F1F1;
+    user-select: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagePushUp {
+    margin-top: 20px;
+}
+
+img {
+    height: 250px;
+}
+
+.hidden {
+    display: none;
+}
