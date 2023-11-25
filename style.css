@@ -1,0 +1,73 @@
+* {
+    font-family: 'Ubuntu';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #212121;
+    user-select: none;
+    overflow: hidden;
+}
+
+#startScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 98vh;
+}
+
+.btnStartScreen {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #D9CAB3;
+    color: #0F3D3E;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 11px #6D9886;
+    font-size: 1.2rem;
+    transition-duration: 0.4s;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: #212121;
+    color: #D9CAB3;
+    transform: scale(1);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    /* Debljina crte */
+    background-color: #D9CAB3;
+    bottom: -2px;
+    /* Razmak od dna buttona */
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.5s ease;
+}
+
+button:hover::before {
+    transform: scaleX(1);
+}
+
+h1 {
+    color: #D9CAB3;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
