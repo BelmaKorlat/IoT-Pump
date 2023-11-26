@@ -10,6 +10,67 @@ body {
     user-select: none;
 }
 
+.blur {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* backdrop-filter: blur(10px); */
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+
+.checkmark {
+    color: #6D9886;
+    height: 45px;
+    width: 45px;
+    margin-bottom: 25px;
+}
+
+.popup {
+    height: 250px;
+    width: 300px;
+    background-color: #212121;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popuptext {
+    color: #D9CAB3;
+    text-align: center;
+    width: 80%;
+}
+
+.btnok {
+    color: #212121;
+    background-color: #6D9886;
+    padding: 7px;
+    border-radius: 5px;
+    width: 60px;
+    height: fit-content;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btnok:hover {
+    color: #F1F1F1;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -27,4 +88,32 @@ img {
 
 .hidden {
     display: none;
+}
+
+input {
+    border: none;
+    padding: 2.5px;
+    border-radius: 5px;
+    background-color: #D9CAB3;
+    color: #0F3D3E;
+    box-shadow: 0 1px 5px #6D9886;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#startExerciseBtn {
+    background-color: #6D9886;
+    color: #F1F1F1;
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0px 4px #D9CAB3;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+#startExerciseBtn:hover {
+    background-color: #212121;
+    color: #D9CAB3;
 }
