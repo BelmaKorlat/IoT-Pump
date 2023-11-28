@@ -7,8 +7,12 @@ body {
     padding: 0;
     background-color: #212121;
     color: #F1F1F1;
-    user-select: none;
 }
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
 
 .blur {
     position: absolute;
@@ -83,7 +87,7 @@ body {
 }
 
 img {
-    height: 250px;
+    height: 300px;
 }
 
 .hidden {
@@ -99,6 +103,7 @@ input {
     box-shadow: 0 1px 5px #6D9886;
     font-size: 1.2rem;
     font-weight: bold;
+    width: 300px;
 }
 
 #startExerciseBtn {
@@ -116,4 +121,52 @@ input {
 #startExerciseBtn:hover {
     background-color: #212121;
     color: #D9CAB3;
+}
+
+.notificationsContainer {
+    margin-top: 10px;
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+    margin: 0;
+
+}
+
+.prvi,
+.drugi,
+.treci,
+.cetvrti,
+.ugasi {
+    display: flex;
+    flex-direction: column;
+    color: #212121;
+    text-align: center;
+}
+
+.notifikacija {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    width: 400px;
+    background-color: #D9CAB3;
+    color: #212121;
+    padding: 10px;
+    color: white;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom: dashed;
+}
+
+.ugasi {
+    position: absolute;
+    right: -40px;
+    top: 40%;
+    width: 25px;
+    text-align: center;
+    border: 2px solid white;
+    cursor: pointer;
+    background-color: #D9CAB3;
+    color: black;
+    border-radius: 5px;
 }
