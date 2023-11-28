@@ -29,6 +29,11 @@ var cucnjevi = 0;
 var distanceValue = 0;
 var pushUpBody = document.getElementById("pushUpBody");
 pushUpBody.addEventListener("load", Load());
+// Dodani elementi za težinu, MET, vrijeme i potrošene kalorije
+var numberOfWeight = document.getElementById("numberOfWeight");
+var numberOfMet = document.getElementById("numberOfMet");
+var burntCalories = document.getElementById("burntCalories");
+var startExerciseTime;
 
 //load funkcija
 function Load() {
@@ -117,25 +122,41 @@ function sendPushUpSet(numberOfPushUps) {
     });
 }
 
+var totalBurntCalories = 0;
+
 //funkcija gdje se brojac zaustavlja u trenutku kada korisnik uradi onoliko sklekova koliko je unio da zeli uraditi
 function checkExercise() {
     var enteredPushUps = parseInt(document.getElementById("numberOfPushUps").value);
 
-    // Check if enteredPushUps is NaN
     if (isNaN(enteredPushUps)) {
-        // Set a default value (e.g., 999)
         enteredPushUps = 999;
     }
 
-    // Send the push-up set to Firebase
     sendPushUpSet(enteredPushUps);
 
-    // Check if pushUp.value is equal to enteredPushUps
+    if (pushUp.value == 1) {
+        startExerciseTime = new Date();
+    }
+
     if (pushUp.value == enteredPushUps) {
-        // Show the popup with a congratulatory message
+
+        var endExerciseTime = new Date();
+        var exerciseDuration = (endExerciseTime - startExerciseTime) / 1000 / 3600; // pretvaramo u sate
+
+        var metValue = parseFloat(numberOfMet.value);
+        var weightValue = parseFloat(numberOfWeight.value);
+
+        if (!isNaN(metValue) && !isNaN(weightValue) && !isNaN(exerciseDuration)) {
+            var caloriesBurned = metValue * weightValue * exerciseDuration;
+            totalBurntCalories += caloriesBurned; // Ažuriranje ukupne sume kalorija
+            burntCalories.value = totalBurntCalories.toFixed(2);
+            funkcija(caloriesBurned.toFixed(2));
+        } else {
+            console.error("Invalid input for MET, weight, or exercise duration.");
+        }
+
         showPopUp(getRandomCongratulation());
-        // Reset the input field
-        document.getElementById("numberOfPushUps").value = "";
+        numberOfPushUps.value = "";
     }
 }
 
@@ -163,6 +184,73 @@ function showPopUp(congratulationMessage) {
 
 var btnOk = document.getElementsByClassName("btnok")[0];
 btnOk.addEventListener("click", closepopup);
+
+var i = 0;
+
+//funkcija za spremanje podataka, historija
+function funkcija(kalorije) {
+    var currentTime = new Date();
+    var day = currentTime.getDate();
+    var month = currentTime.getMonth() + 1;
+    var year = currentTime.getFullYear();
+    var hours = currentTime.getHours().toString().padStart(2, "0");
+    var minutes = currentTime.getMinutes().toString().padStart(2, "0");
+    var seconds = currentTime.getSeconds().toString().padStart(2, "0");
+
+    var formattedDate = `${day}.${month}.${year}`;
+    var formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    i += 1;
+
+    var newTaskDiv = document.createElement("div");
+    newTaskDiv.className = "notifikacija";
+    newTaskDiv.innerHTML = `
+    <div class="prvi">
+        <p>Serija</p>
+        <p>${i}</p>
+    </div>
+    <div class="drugi">
+        <p>Datum i vrijeme</p>
+        <p>${formattedDate} / ${formattedTime}</p>
+    </div>
+    <div class="treci">
+        <p>Broj sklekova</p>
+        <p>${pushUp.value}</p >
+    </div>
+    <div class="cetvrti">
+        <p>Broj kalorija</p>
+        <p>${kalorije}</p >
+    </div>
+    <div class="ugasi">
+        X
+    </div>
+`;
+    document.querySelector(".notificationsContainer").append(newTaskDiv);
+
+    saveData();
+}
+
+function saveData() {
+    localStorage.setItem("data", document.getElementById("taskovi").innerHTML);
+}
+
+function showTask() {
+    document.getElementById("taskovi").innerHTML = localStorage.getItem("data");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showTask();
+});
+
+//za brisanje
+document.querySelector(".notificationsContainer")
+    .addEventListener("click", function (e) {
+        if (e.target.classList.contains("ugasi")) {
+            e.target.parentElement.remove();
+            saveData();
+        }
+    });
+
 
 
 Load();
