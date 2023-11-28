@@ -28,14 +28,30 @@
             <img src="./images/sklek-gore.jpeg" alt="Push-Up Up" id="imgGore">
         </div>
         <div class="labelInput">
+            <label>Enter your weight(kg):</label>
+            <br>
+            <input type="number" id="numberOfWeight">
+            <br> <br>
+            <label>Enter your MET(3-6: medium; 6+: hard ) intensity:</label>
+            <br>
+            <input type="number" id="numberOfMet">
+            <br> <br>
             <label>How many push-ups would you like to do?</label>
             <br>
             <input type="number" id="numberOfPushUps">
-            <button id="startExerciseBtn">Start Exercise</button>
             <br> <br>
-            <label>No. Push Ups</label>
+            <label>Number of Push Ups you made:</label>
             <br>
             <input type="number" readonly id="pushUp">
+            <br> <br>
+            <label>Burnt calories:</label>
+            <br>
+            <input type="number" readonly id="burntCalories">
+        </div>
+        <div>
+            <p>ACTIVITIES:</p>
+        </div>
+        <div class="notificationsContainer" id="taskovi">
         </div>
     </div>
     <script src="scriptPushUp.js" type="module"></script>
