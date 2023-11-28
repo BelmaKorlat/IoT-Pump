@@ -40,14 +40,24 @@ const int trigPin = D7;
 const int echoPin = D8;
 long duration;
 int distance;
-const int PIN_LED   = D0;
 const int PIN_Buzzer = D1;
+const int PIN_LEDR1   = D0;
+const int PIN_LEDR2   = D2;
+const int PIN_LEDY1   = D3;
+const int PIN_LEDY2   = D4;
+const int PIN_LEDG1   = D5;
+const int PIN_LEDG2   = D6;
 
 void setup(){
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin,INPUT);
-  pinMode(PIN_LED,OUTPUT);
   pinMode(PIN_Buzzer,OUTPUT);
+  pinMode(PIN_LEDR1,OUTPUT);
+  pinMode(PIN_LEDR2,OUTPUT);
+  pinMode(PIN_LEDY1,OUTPUT);
+  pinMode(PIN_LEDY2,OUTPUT);
+  pinMode(PIN_LEDG1,OUTPUT);
+  pinMode(PIN_LEDG2,OUTPUT);
 
   Serial.begin(115200);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -114,15 +124,12 @@ void loop(){
   if(sklekovi == 1){
     if(zeljeniSklekovi != 999){
         noTone(PIN_Buzzer); 
-      digitalWrite(PIN_LED, LOW);
       if(distance <= 10 ){
       down = true;
-      digitalWrite(PIN_LED, HIGH);
     }
 
     if(distance > 20){
       up = true;
-      digitalWrite(PIN_LED, LOW);
     }
 
     if(down == true && up == true){
@@ -131,6 +138,60 @@ void loop(){
       countPushUp+=0.5;
     }
 
+  if(distance <= 8){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, LOW);
+    digitalWrite(PIN_LEDY1, LOW);
+    digitalWrite(PIN_LEDY2, LOW);
+    digitalWrite(PIN_LEDR1, LOW);
+    digitalWrite(PIN_LEDR2, LOW);
+  }
+
+  if(distance > 8 && distance <= 15){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, HIGH);
+    digitalWrite(PIN_LEDY1, LOW);
+    digitalWrite(PIN_LEDY2, LOW);
+    digitalWrite(PIN_LEDR1, LOW);
+    digitalWrite(PIN_LEDR2, LOW);
+  }
+
+  if(distance > 15 && distance <= 20){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, HIGH);
+    digitalWrite(PIN_LEDY1, HIGH);
+    digitalWrite(PIN_LEDY2, LOW);
+    digitalWrite(PIN_LEDR1, LOW);
+    digitalWrite(PIN_LEDR2, LOW);
+  }
+
+  if(distance > 20 && distance <= 25){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, HIGH);
+    digitalWrite(PIN_LEDY1, HIGH);
+    digitalWrite(PIN_LEDY2, HIGH);
+    digitalWrite(PIN_LEDR1, LOW);
+    digitalWrite(PIN_LEDR2, LOW);
+  }
+
+  if(distance > 25 && distance <= 30){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, HIGH);
+    digitalWrite(PIN_LEDY1, HIGH);
+    digitalWrite(PIN_LEDY2, HIGH);
+    digitalWrite(PIN_LEDR1, HIGH);
+    digitalWrite(PIN_LEDR2, LOW);
+  }
+
+  if(distance > 30){
+    digitalWrite(PIN_LEDG1, HIGH);
+    digitalWrite(PIN_LEDG2, HIGH);
+    digitalWrite(PIN_LEDY1, HIGH);
+    digitalWrite(PIN_LEDY2, HIGH);
+    digitalWrite(PIN_LEDR1, HIGH);
+    digitalWrite(PIN_LEDR2, HIGH);
+  }
+
   if(zeljeniSklekovi == int(countPushUp)){
     Firebase.RTDB.setFloat(&fbdo, "data/pushUpFireB", countPushUp);
     delay(1500);
@@ -138,20 +199,23 @@ void loop(){
     delay(1500);
     noTone(PIN_Buzzer); 
     countPushUp = 0;
+    digitalWrite(PIN_LEDG1, LOW);
+    digitalWrite(PIN_LEDG2, LOW);
+    digitalWrite(PIN_LEDY1, LOW);
+    digitalWrite(PIN_LEDY2, LOW);
+    digitalWrite(PIN_LEDR1, LOW);
+    digitalWrite(PIN_LEDR2, LOW);
     }
   }
 
   } else if(cucnjevi == 1){
     noTone(PIN_Buzzer); 
-     digitalWrite(PIN_LED, LOW);
       if(distance <= 30 ){
       down = true;
-       digitalWrite(PIN_LED, HIGH);
       tone(PIN_Buzzer, 100); 
     }
 
     if(distance > 50){
-       digitalWrite(PIN_LED, LOW);
        noTone(PIN_Buzzer); 
       up = true;
     }
