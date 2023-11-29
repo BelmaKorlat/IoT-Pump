@@ -170,3 +170,13 @@ input {
     color: black;
     border-radius: 5px;
 }
+
+canvas {
+    background-color: #1d1c1c;
+}
+
+#myChart {
+    width: 80%;
+    margin: 0 auto;
+    /* Centrirajte grafikon */
+}
