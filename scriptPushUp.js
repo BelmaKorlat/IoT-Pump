@@ -28,12 +28,21 @@ var cucnjevi = 0;
 
 var distanceValue = 0;
 var pushUpBody = document.getElementById("pushUpBody");
-pushUpBody.addEventListener("load", Load());
+pushUpBody.addEventListener("load", Load);
 // Dodani elementi za težinu, MET, vrijeme i potrošene kalorije
 var numberOfWeight = document.getElementById("numberOfWeight");
 var numberOfMet = document.getElementById("numberOfMet");
 var burntCalories = document.getElementById("burntCalories");
 var startExerciseTime;
+
+// Postavljanje grafikona
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart;
+
+// Postavljanje početnih vrijednosti
+var totalPushUps = 0;
+var totalCalories = 0;
+var pushUpData = [];
 
 //load funkcija
 function Load() {
@@ -151,6 +160,7 @@ function checkExercise() {
             totalBurntCalories += caloriesBurned; // Ažuriranje ukupne sume kalorija
             burntCalories.value = totalBurntCalories.toFixed(2);
             funkcija(caloriesBurned.toFixed(2));
+            drawChart();
         } else {
             console.error("Invalid input for MET, weight, or exercise duration.");
         }
@@ -206,19 +216,19 @@ function funkcija(kalorije) {
     newTaskDiv.className = "notifikacija";
     newTaskDiv.innerHTML = `
     <div class="prvi">
-        <p>Serija</p>
+        <p>Set</p>
         <p>${i}</p>
     </div>
     <div class="drugi">
-        <p>Datum i vrijeme</p>
+        <p>Date and Time</p>
         <p>${formattedDate} / ${formattedTime}</p>
     </div>
     <div class="treci">
-        <p>Broj sklekova</p>
+        <p>No. Push-ups</p>
         <p>${pushUp.value}</p >
     </div>
     <div class="cetvrti">
-        <p>Broj kalorija</p>
+        <p>No. Calories</p>
         <p>${kalorije}</p >
     </div>
     <div class="ugasi">
@@ -228,6 +238,25 @@ function funkcija(kalorije) {
     document.querySelector(".notificationsContainer").append(newTaskDiv);
 
     saveData();
+
+    // Ažuriranje ukupnog broja sklekova i kalorija
+    totalPushUps += parseInt(pushUp.value); // Dodajemo samo ako je pushUp.value broj
+    totalCalories += parseFloat(kalorije);
+
+    // Ažuriranje HTML-a s ukupnim vrijednostima
+    document.getElementById('totalPushUps').innerText = totalPushUps;
+    document.getElementById('totalCalories').innerText = totalCalories;
+
+    // Ažuriranje podataka za grafikon
+    pushUpData.push({
+        date: new Date().toLocaleString(),
+        pushUps: parseInt(pushUp.value), // Dodajemo samo ako je pushUp.value broj
+        calories: parseFloat(kalorije).toFixed(2)
+    });
+
+    // Poziv funkcija za crtanje grafa
+    createChart();
+    drawChart();
 }
 
 function saveData() {
@@ -242,17 +271,131 @@ document.addEventListener("DOMContentLoaded", () => {
     showTask();
 });
 
+// //za brisanje
+// document.querySelector(".notificationsContainer")
+//     .addEventListener("click", function (e) {
+//         if (e.target.classList.contains("ugasi")) {
+//             e.target.parentElement.remove();
+//             saveData();
+//             drawChart();
+//         }
+//     });
+
 //za brisanje
-document.querySelector(".notificationsContainer")
-    .addEventListener("click", function (e) {
-        if (e.target.classList.contains("ugasi")) {
-            e.target.parentElement.remove();
+// document.querySelector(".notificationsContainer").addEventListener("click", function (e) {
+//     if (e.target.classList.contains("ugasi")) {
+//         // Dobivanje indeksa izbrisane notifikacije
+//         var index = Array.from(document.querySelector(".notificationsContainer").children).indexOf(e.target.parentElement);
+
+//         // Uklanjanje notifikacije iz HTML-a
+//         e.target.parentElement.remove();
+
+//         // Ažuriranje pushUpData, totalPushUps, totalCalories i lokalnog pohranjivanja
+//         if (index !== -1 && index < pushUpData.length) {
+//             // Provjeri je li svojstvo pushUps definirano prije pristupanja
+//             if (pushUpData[index].hasOwnProperty('pushUps')) {
+//                 totalPushUps -= parseInt(pushUpData[index].pushUps);
+//             }
+
+//             // Provjeri je li svojstvo calories definirano prije pristupanja
+//             if (pushUpData[index].hasOwnProperty('calories')) {
+//                 totalCalories -= parseFloat(pushUpData[index].calories);
+//             }
+
+//             pushUpData.splice(index, 1);
+//             saveData();
+//             drawChart();
+//         }
+//     }
+// });
+
+//za brisanje
+document.querySelector(".notificationsContainer").addEventListener("click", function (e) {
+    if (e.target.classList.contains("ugasi")) {
+        // Dobivanje indeksa izbrisane notifikacije
+        var index = Array.from(document.querySelector(".notificationsContainer").children).indexOf(e.target.parentElement);
+
+        // Uklanjanje notifikacije iz HTML-a
+        e.target.parentElement.remove();
+
+        // Ažuriranje pushUpData, totalPushUps, totalCalories i lokalnog pohranjivanja
+        if (index !== -1 && index <= pushUpData.length) {
+
+            // Provjeri je li svojstvo pushUps definirano prije pristupanja
+            if (pushUpData[index].hasOwnProperty('pushUps')) {
+                totalPushUps -= parseInt(pushUpData[index].pushUps);
+            }
+
+            // Provjeri je li svojstvo calories definirano prije pristupanja
+            if (pushUpData[index].hasOwnProperty('calories')) {
+                totalCalories -= parseFloat(pushUpData[index].calories);
+            }
+
+            pushUpData.splice(index, 1);
             saveData();
+            drawChart();
+        }
+    }
+});
+
+function createChart() {
+    // Uništi postojeći grafikon ako postoji
+    if (myChart) {
+        myChart.destroy();
+    }
+
+    // Kreirajte novi grafikon
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: pushUpData.map(entry => entry.date),
+            datasets: [{
+                label: 'Number of Push-ups',
+                data: pushUpData.map(entry => entry.pushUps),
+                backgroundColor: '#d9cab38f',
+                borderColor: '#D9CAB3',
+                borderWidth: 1
+            }, {
+                label: 'Calories Burned',
+                data: pushUpData.map(entry => entry.calories),
+                backgroundColor: '#6d988665',
+                borderColor: '#6D9886',
+                borderWidth: 1
+            }]
         }
     });
 
+    // Spremi grafikon u localStorage
+    localStorage.setItem("chartData", JSON.stringify(pushUpData));
+}
 
+function drawChart() {
+    // Ako nema podataka, ne crta se grafikon
+    if (!pushUpData || pushUpData.length === 0) {
+        return;
+    }
 
-Load();
+    // Uništi postojeći grafikon ako postoji
+    if (myChart) {
+        myChart.destroy();
+    }
+
+    // Kreirajte novi grafikon
+    createChart();
+}
+
+// Učitaj podatke iz localStorage-a prilikom pokretanja stranice
+document.addEventListener("DOMContentLoaded", () => {
+    showTask();
+    const chartData = localStorage.getItem("chartData");
+    if (chartData) {
+        pushUpData = JSON.parse(chartData);
+        drawChart();
+    }
+    Load();
+});
+
+setInterval(Load, 1000);
+
 window.setInterval(Load, 1000);
 
