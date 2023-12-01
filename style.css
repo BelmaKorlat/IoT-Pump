@@ -73,3 +73,20 @@ h1 {
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
     letter-spacing: 1px;
 }
+
+@media only screen and (max-width: 900px) {
+    .btnStartScreen {
+        width: 90%;
+    }
+
+    h1 {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .btnPush {
+        margin-right: 5px;
+    }
+
+}
