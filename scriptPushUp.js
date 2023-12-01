@@ -235,7 +235,7 @@ function funkcija(kalorije) {
 `;
     document.querySelector(".notificationsContainer").append(newTaskDiv);
 
-    saveData();
+    savePushUpData();
 
     // Ažuriranje ukupnog broja sklekova i kalorija
     totalPushUps += parseInt(pushUp.value); // Dodajemo samo ako je pushUp.value broj
@@ -256,15 +256,16 @@ function funkcija(kalorije) {
     drawChart();
 }
 
-function saveData() {
-    localStorage.setItem("data", document.getElementById("taskovi").innerHTML);
+function savePushUpData() {
+    localStorage.setItem("pushUpdata", document.getElementById("taskovi").innerHTML);
 }
 
 function showTask() {
-    document.getElementById("taskovi").innerHTML = localStorage.getItem("data");
+    document.getElementById("taskovi").innerHTML = localStorage.getItem("pushUpdata");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// Funkcija koja se izvršava kada se stranica učita
+document.addEventListener('DOMContentLoaded', function () {
     showTask();
 });
 
@@ -291,7 +292,7 @@ document.querySelector(".notificationsContainer").addEventListener("click", func
             }
 
             pushUpData.splice(index, 1);
-            saveData();
+            savePushUpData();
 
             if (document.getElementById("taskovi").childElementCount <= 0) {
                 localStorage.clear();
@@ -330,7 +331,7 @@ function createChart() {
     });
 
     // Spremi graf u localStorage
-    localStorage.setItem("chartData", JSON.stringify(pushUpData));
+    localStorage.setItem("chartPushUpData", JSON.stringify(pushUpData));
 }
 
 function drawChart() {
@@ -349,9 +350,9 @@ function drawChart() {
 // Učitaj podatke iz localStorage-a prilikom pokretanja stranice
 document.addEventListener("DOMContentLoaded", () => {
     showTask();
-    const chartData = localStorage.getItem("chartData");
-    if (chartData) {
-        pushUpData = JSON.parse(chartData);
+    const chartPushUpData = localStorage.getItem("chartPushUpData");
+    if (chartPushUpData) {
+        pushUpData = JSON.parse(chartPushUpData);
         drawChart();
     }
     Load();
@@ -360,4 +361,3 @@ document.addEventListener("DOMContentLoaded", () => {
 Load();
 
 window.setInterval(Load, 1000);
-
