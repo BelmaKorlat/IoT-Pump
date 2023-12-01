@@ -185,3 +185,29 @@ canvas {
     margin: 0 auto;
     /* Centrirajte grafikon */
 }
+
+@media only screen and (max-width: 450px) {
+    .imagePushUp img {
+        height: 250px;
+    }
+
+    .imageSquat img {
+        height: 200px;
+    }
+
+    .notifikacija {
+        width: 80%;
+    }
+
+}
+
+@media only screen and (max-width: 400px) {
+    .imagePushUp img {
+        height: 250px;
+    }
+
+    .notifikacija {
+        width: 65%;
+    }
+
+}
