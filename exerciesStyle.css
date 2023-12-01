@@ -106,7 +106,7 @@ input {
     box-shadow: 0 1px 5px #6D9886;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 300px;
+    width: 100%;
 }
 
 #startExerciseBtn {
@@ -133,7 +133,7 @@ input {
     height: 300px;
     overflow-y: scroll;
     margin: 0;
-
+    margin-bottom: 50px;
 }
 
 .prvi,
@@ -192,11 +192,20 @@ canvas {
     }
 
     .imageSquat img {
-        height: 200px;
+        height: 250px;
     }
 
     .notifikacija {
-        width: 80%;
+        width: 70%;
+    }
+
+    input {
+        width: 97%;
+    }
+
+    .notificationsContainer,
+    .notificationsContainerSquat {
+        width: 100%;
     }
 
 }
@@ -206,8 +215,13 @@ canvas {
         height: 250px;
     }
 
+    .imageSquat img {
+        height: 200px;
+    }
+
     .notifikacija {
         width: 65%;
+        height: 130px;
     }
 
 }
