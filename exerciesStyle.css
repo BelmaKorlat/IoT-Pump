@@ -1,5 +1,7 @@
 * {
     font-family: 'Ubuntu';
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -82,7 +84,8 @@ body {
     align-items: center;
 }
 
-.imagePushUp {
+.imagePushUp,
+.imageSquat {
     margin-top: 20px;
 }
 
@@ -123,7 +126,8 @@ input {
     color: #D9CAB3;
 }
 
-.notificationsContainer {
+.notificationsContainer,
+.notificationsContainerSquat {
     margin-top: 10px;
     width: 500px;
     height: 300px;
@@ -175,7 +179,8 @@ canvas {
     background-color: #1d1c1c;
 }
 
-#myChart {
+#myChart,
+#myChartSquat {
     width: 80%;
     margin: 0 auto;
     /* Centrirajte grafikon */
