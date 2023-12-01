@@ -32,13 +32,13 @@
             <br>
             <input type="number" id="numberOfWeight">
             <br> <br>
-            <label>Enter your MET(3-6: medium; 6+: hard ) intensity:</label>
+            <label>Enter your MET(3-6: medium; 6-10: hard ) intensity:</label>
             <br>
-            <input type="number" id="numberOfMet">
+            <input type="number" id="numberOfMet" min="3" max="10">
             <br> <br>
             <label>How many push-ups would you like to do?</label>
             <br>
-            <input type="number" id="numberOfPushUps">
+            <input type="number" id="numberOfPushUps" min="1">
             <br> <br>
             <label>Number of Push Ups you made:</label>
             <br>
@@ -59,7 +59,6 @@
             <p>Total Push-ups: <span id="totalPushUps">0</span></p>
             <p>Total Calories Burned: <span id="totalCalories">0</span></p>
         </div>
-
     </div>
 
     <script src="scriptPushUp.js" type="module"></script>
