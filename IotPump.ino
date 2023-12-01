@@ -12,14 +12,14 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-#define WIFI_SSID "-"
-#define WIFI_PASSWORD "-"
+#define WIFI_SSID "n"
+#define WIFI_PASSWORD "Aisa1414"
 
 // Insert Firebase project API Key
-#define API_KEY "-"
+#define API_KEY "AIzaSyBXTbiWSqe9sKhGSqIhWTLslIH1BARZRBY"
 
 // Insert RTDB URLefine the RTDB URL */
-#define DATABASE_URL "-" 
+#define DATABASE_URL "https://iot-pump-45b16-default-rtdb.europe-west1.firebasedatabase.app/" 
 
 //Define Firebase Data object
 FirebaseData fbdo;
@@ -33,6 +33,7 @@ int cucnjevi = 0;
 float countPushUp = 0;
 float countSquat = 0;
 int zeljeniSklekovi = 0;
+int zeljeniCucnjevi = 0;
 bool down = false;
 bool up = false;
 bool signupOK = false;
@@ -115,11 +116,17 @@ void loop(){
          }
   }
 
-      if(Firebase.RTDB.getInt(&fbdo, "/data/wantedPushUps")){
-        if(fbdo.dataType() == "int"){
-          zeljeniSklekovi = fbdo.intData();
-         }
+  if(Firebase.RTDB.getInt(&fbdo, "/data/wantedPushUps")){
+    if(fbdo.dataType() == "int"){
+        zeljeniSklekovi = fbdo.intData();
+       }
     }
+
+  if(Firebase.RTDB.getInt(&fbdo, "/data/wantedSquats")){
+    if(fbdo.dataType() == "int"){
+        zeljeniCucnjevi = fbdo.intData();
+    }
+  }
 
   if(sklekovi == 1){
     if(zeljeniSklekovi != 999){
@@ -138,100 +145,163 @@ void loop(){
       countPushUp+=0.5;
     }
 
-  if(distance <= 8){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, LOW);
-    digitalWrite(PIN_LEDY1, LOW);
-    digitalWrite(PIN_LEDY2, LOW);
-    digitalWrite(PIN_LEDR1, LOW);
-    digitalWrite(PIN_LEDR2, LOW);
-  }
-
-  if(distance > 8 && distance <= 15){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, HIGH);
-    digitalWrite(PIN_LEDY1, LOW);
-    digitalWrite(PIN_LEDY2, LOW);
-    digitalWrite(PIN_LEDR1, LOW);
-    digitalWrite(PIN_LEDR2, LOW);
-  }
-
-  if(distance > 15 && distance <= 20){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, HIGH);
-    digitalWrite(PIN_LEDY1, HIGH);
-    digitalWrite(PIN_LEDY2, LOW);
-    digitalWrite(PIN_LEDR1, LOW);
-    digitalWrite(PIN_LEDR2, LOW);
-  }
-
-  if(distance > 20 && distance <= 25){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, HIGH);
-    digitalWrite(PIN_LEDY1, HIGH);
-    digitalWrite(PIN_LEDY2, HIGH);
-    digitalWrite(PIN_LEDR1, LOW);
-    digitalWrite(PIN_LEDR2, LOW);
-  }
-
-  if(distance > 25 && distance <= 30){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, HIGH);
-    digitalWrite(PIN_LEDY1, HIGH);
-    digitalWrite(PIN_LEDY2, HIGH);
-    digitalWrite(PIN_LEDR1, HIGH);
-    digitalWrite(PIN_LEDR2, LOW);
-  }
-
-  if(distance > 30){
-    digitalWrite(PIN_LEDG1, HIGH);
-    digitalWrite(PIN_LEDG2, HIGH);
-    digitalWrite(PIN_LEDY1, HIGH);
-    digitalWrite(PIN_LEDY2, HIGH);
-    digitalWrite(PIN_LEDR1, HIGH);
-    digitalWrite(PIN_LEDR2, HIGH);
-  }
-
-  if(zeljeniSklekovi == int(countPushUp)){
-    Firebase.RTDB.setFloat(&fbdo, "data/pushUpFireB", countPushUp);
-    delay(1500);
-    tone(PIN_Buzzer, 200); 
-    delay(1500);
-    noTone(PIN_Buzzer); 
-    countPushUp = 0;
-    digitalWrite(PIN_LEDG1, LOW);
-    digitalWrite(PIN_LEDG2, LOW);
-    digitalWrite(PIN_LEDY1, LOW);
-    digitalWrite(PIN_LEDY2, LOW);
-    digitalWrite(PIN_LEDR1, LOW);
-    digitalWrite(PIN_LEDR2, LOW);
+    if(distance <= 8){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, LOW);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
     }
-  }
+
+    if(distance > 8 && distance <= 15){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 15 && distance <= 20){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 20 && distance <= 25){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 25 && distance <= 30){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, HIGH);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 30){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, HIGH);
+      digitalWrite(PIN_LEDR2, HIGH);
+    }
+
+    if(zeljeniSklekovi == int(countPushUp)){
+      Firebase.RTDB.setFloat(&fbdo, "data/pushUpFireB", countPushUp);
+      delay(1500);
+      tone(PIN_Buzzer, 200); 
+      delay(1500);
+      noTone(PIN_Buzzer); 
+      countPushUp = 0;
+      digitalWrite(PIN_LEDG1, LOW);
+      digitalWrite(PIN_LEDG2, LOW);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+  } 
 
   } else if(cucnjevi == 1){
-    noTone(PIN_Buzzer); 
-      if(distance <= 30 ){
+        if(zeljeniCucnjevi != 999){
+        noTone(PIN_Buzzer); 
+      if(distance <= 10 ){
       down = true;
-      tone(PIN_Buzzer, 100); 
     }
 
     if(distance > 50){
-       noTone(PIN_Buzzer); 
       up = true;
     }
 
     if(down == true && up == true){
-      if(countSquat == 0){
-      down = false;
-      up = false;
-      countSquat++;
-      } else{
       down = false;
       up = false;
       countSquat+=0.5;
-      }
+    }
+
+    if(distance <= 30){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, LOW);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 30 && distance <= 35){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 35 && distance <= 40){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 40 && distance <= 45){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 45 && distance <= 50){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, HIGH);
+      digitalWrite(PIN_LEDR2, LOW);
+    }
+
+    if(distance > 50){
+      digitalWrite(PIN_LEDG1, HIGH);
+      digitalWrite(PIN_LEDG2, HIGH);
+      digitalWrite(PIN_LEDY1, HIGH);
+      digitalWrite(PIN_LEDY2, HIGH);
+      digitalWrite(PIN_LEDR1, HIGH);
+      digitalWrite(PIN_LEDR2, HIGH);
+    }
+
+    if(zeljeniCucnjevi == int(countSquat)){
+      Firebase.RTDB.setFloat(&fbdo, "data/squatFireB", countSquat);
+      delay(1500);
+      tone(PIN_Buzzer, 200); 
+      delay(1500);
+      noTone(PIN_Buzzer); 
+      countSquat = 0;
+      digitalWrite(PIN_LEDG1, LOW);
+      digitalWrite(PIN_LEDG2, LOW);
+      digitalWrite(PIN_LEDY1, LOW);
+      digitalWrite(PIN_LEDY2, LOW);
+      digitalWrite(PIN_LEDR1, LOW);
+      digitalWrite(PIN_LEDR2, LOW);
     }
   }
+}
 
   if (Firebase.RTDB.setInt(&fbdo, "data/distance", distance)){
       Serial.println("PASSED");
