@@ -12,11 +12,11 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-#define WIFI_SSID "n"
-#define WIFI_PASSWORD "Aisa1414"
+#define WIFI_SSID ""
+#define WIFI_PASSWORD "-"
 
 // Insert Firebase project API Key
-#define API_KEY "AIzaSyBXTbiWSqe9sKhGSqIhWTLslIH1BARZRBY"
+#define API_KEY "-"
 
 // Insert RTDB URLefine the RTDB URL */
 #define DATABASE_URL "https://iot-pump-45b16-default-rtdb.europe-west1.firebasedatabase.app/" 
