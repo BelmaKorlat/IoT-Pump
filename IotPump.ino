@@ -5,6 +5,9 @@
   #include <ESP8266WiFi.h>
 #endif
 #include <Firebase_ESP_Client.h>
+//Biblioteke za temp senzor
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 //Provide the token generation process info.
 #include "addons/TokenHelper.h"
@@ -12,7 +15,7 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-#define WIFI_SSID ""
+#define WIFI_SSID "-"
 #define WIFI_PASSWORD "-"
 
 // Insert Firebase project API Key
@@ -26,6 +29,15 @@ FirebaseData fbdo;
 
 FirebaseAuth auth;
 FirebaseConfig config;
+
+//za temp
+#define ONE_WIRE_BUS D3
+
+OneWire oneWire(ONE_WIRE_BUS);
+
+DallasTemperature sensors(&oneWire);
+
+float Celsius = 0;
 
 unsigned long sendDataPrevMillis = 0;
 int sklekovi = 0;
@@ -43,22 +55,18 @@ long duration;
 int distance;
 const int PIN_Buzzer = D1;
 const int PIN_LEDR1   = D0;
-const int PIN_LEDR2   = D2;
-const int PIN_LEDY1   = D3;
-const int PIN_LEDY2   = D4;
-const int PIN_LEDG1   = D5;
-const int PIN_LEDG2   = D6;
+const int PIN_LEDY1   = D5;
+const int PIN_LEDG1   = D4;
 
 void setup(){
+   sensors.begin();
+  
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin,INPUT);
   pinMode(PIN_Buzzer,OUTPUT);
   pinMode(PIN_LEDR1,OUTPUT);
-  pinMode(PIN_LEDR2,OUTPUT);
   pinMode(PIN_LEDY1,OUTPUT);
-  pinMode(PIN_LEDY2,OUTPUT);
   pinMode(PIN_LEDG1,OUTPUT);
-  pinMode(PIN_LEDG2,OUTPUT);
 
   Serial.begin(115200);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -104,6 +112,10 @@ void loop(){
     digitalWrite(trigPin,LOW);
     duration = pulseIn(echoPin,HIGH);
     distance = duration * 0.034 / 2;
+    //temp
+    sensors.requestTemperatures();
+    Celsius = sensors.getTempCByIndex(0);
+
   if(Firebase.RTDB.getInt(&fbdo, "/data/sklekoviOn")){
         if(fbdo.dataType() == "int"){
           sklekovi = fbdo.intData();
@@ -147,56 +159,38 @@ void loop(){
 
     if(distance <= 8){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, LOW);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 8 && distance <= 15){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 15 && distance <= 20){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 20 && distance <= 25){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 25 && distance <= 30){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, HIGH);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 30){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, HIGH);
-      digitalWrite(PIN_LEDR2, HIGH);
     }
 
     if(zeljeniSklekovi == int(countPushUp)){
@@ -207,11 +201,8 @@ void loop(){
       noTone(PIN_Buzzer); 
       countPushUp = 0;
       digitalWrite(PIN_LEDG1, LOW);
-      digitalWrite(PIN_LEDG2, LOW);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
   } 
 
@@ -234,56 +225,38 @@ void loop(){
 
     if(distance <= 30){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, LOW);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 30 && distance <= 35){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 35 && distance <= 40){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 40 && distance <= 45){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 45 && distance <= 50){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, HIGH);
-      digitalWrite(PIN_LEDR2, LOW);
     }
 
     if(distance > 50){
       digitalWrite(PIN_LEDG1, HIGH);
-      digitalWrite(PIN_LEDG2, HIGH);
       digitalWrite(PIN_LEDY1, HIGH);
-      digitalWrite(PIN_LEDY2, HIGH);
       digitalWrite(PIN_LEDR1, HIGH);
-      digitalWrite(PIN_LEDR2, HIGH);
     }
 
     if(zeljeniCucnjevi == int(countSquat)){
@@ -294,11 +267,8 @@ void loop(){
       noTone(PIN_Buzzer); 
       countSquat = 0;
       digitalWrite(PIN_LEDG1, LOW);
-      digitalWrite(PIN_LEDG2, LOW);
       digitalWrite(PIN_LEDY1, LOW);
-      digitalWrite(PIN_LEDY2, LOW);
       digitalWrite(PIN_LEDR1, LOW);
-      digitalWrite(PIN_LEDR2, LOW);
     }
   }
 }
@@ -324,6 +294,16 @@ void loop(){
     }
 
       if (Firebase.RTDB.setFloat(&fbdo, "data/squatFireB", countSquat)){
+      Serial.println("PASSED");
+      Serial.println("PATH: " + fbdo.dataPath());
+      Serial.println("TYPE: " + fbdo.dataType());
+    }
+    else {
+      Serial.println("FAILED");
+      Serial.println("REASON: " + fbdo.errorReason());
+    }
+
+        if (Firebase.RTDB.setFloat(&fbdo, "data/Celsius", Celsius)){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
       Serial.println("TYPE: " + fbdo.dataType());
