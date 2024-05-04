@@ -15,11 +15,11 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-#define WIFI_SSID "-"
-#define WIFI_PASSWORD "-"
+#define WIFI_SSID "n"
+#define WIFI_PASSWORD "Aisa1414"
 
 // Insert Firebase project API Key
-#define API_KEY "-"
+#define API_KEY "AIzaSyBXTbiWSqe9sKhGSqIhWTLslIH1BARZRBY"
 
 // Insert RTDB URLefine the RTDB URL */
 #define DATABASE_URL "https://iot-pump-45b16-default-rtdb.europe-west1.firebasedatabase.app/" 
@@ -57,6 +57,13 @@ const int PIN_Buzzer = D1;
 const int PIN_LEDR1   = D0;
 const int PIN_LEDY1   = D5;
 const int PIN_LEDG1   = D4;
+int age = 0;
+float weight = 0;
+float height = 0;
+const int maxNameLength = 50;
+const int maxNameLengthG = 2;
+char name[maxNameLength] = " ";
+char gender[maxNameLengthG]= " ";
 
 void setup(){
    sensors.begin();
@@ -313,4 +320,10 @@ void loop(){
       Serial.println("REASON: " + fbdo.errorReason());
     }
   }
+  Firebase.RTDB.setInt(&fbdo, "data/age", age);
+  Firebase.RTDB.setFloat(&fbdo, "data/weight", weight);
+  Firebase.RTDB.setFloat(&fbdo, "data/height", height);
+  Firebase.RTDB.setString(&fbdo, "data/name", name);
+  Firebase.RTDB.setString(&fbdo, "data/gender", gender);
+  
 }
