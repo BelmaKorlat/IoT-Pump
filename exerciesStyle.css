@@ -7,14 +7,29 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #212121;
+    background-color: #080808;
     color: #F1F1F1;
+}
+
+.title {
+    background-image: linear-gradient(to right, #BC6FF1, #52057B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding: 10px;
 }
 
 ::-webkit-scrollbar {
     width: 0;
 }
 
+.temperature {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+}
 
 .blur {
     position: absolute;
@@ -87,17 +102,115 @@ body {
 .imagePushUp,
 .imageSquat {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 img {
+    width: 500px;
     height: 300px;
+    border-radius: 10px;
 }
 
 .hidden {
     display: none;
 }
 
-input {
+.personalDetails {
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #52057B;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.titleEnterDetails {
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.contentDetails {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.left,
+.middle,
+.right {
+    flex-basis: 30%;
+}
+
+.middle {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.personalDetails input {
+    border: none;
+    width: 90%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #52057B;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.personalDetails input:focus {
+    background-color: #892CDC;
+    transform: scale(1.05);
+}
+
+.personalDetails label {
+    font-size: 1.1rem;
+}
+
+.healthStatistics {
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #52057B;
+    border-radius: 10px;
+}
+
+.healthStatisticsDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.BMI,
+.bodyFat,
+.bodyType,
+.idealWeight {
+    border-left: 4px solid #BC6FF1;
+    border-radius: 2px;
+    padding: 20px;
+    display: flex;
+    width: 45%;
+    margin: 10px;
+    box-shadow: 0 8px 16px rgba(173, 164, 164, 0.2);
+}
+
+.BMIicon img,
+.bodyFaticon img,
+.bodyTypeicon img,
+.idealWeighticon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.BMIvalues p,
+.bodyFatvalues p,
+.bodyTypeValues p,
+.idealWeightValues p {
+    margin: 0;
+}
+
+.labelInput {
     border: none;
     padding: 2.5px;
     border-radius: 5px;
@@ -129,7 +242,7 @@ input {
 .notificationsContainer,
 .notificationsContainerSquat {
     margin-top: 10px;
-    width: 500px;
+    width: 100%;
     height: 300px;
     overflow-y: scroll;
     margin: 0;
@@ -140,6 +253,7 @@ input {
 .drugi,
 .treci,
 .cetvrti,
+.peti,
 .ugasi {
     display: flex;
     flex-direction: column;
@@ -151,7 +265,7 @@ input {
     display: flex;
     justify-content: space-between;
     height: 100px;
-    width: 400px;
+    width: 80%;
     background-color: #D9CAB3;
     color: #212121;
     padding: 10px;

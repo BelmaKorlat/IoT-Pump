@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 import { getDatabase, ref, set, child, update, remove, get }
     from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
 
+
 const db = getDatabase();
 
 var pushUp = document.getElementById("pushUp");
@@ -67,6 +68,35 @@ function Load() {
 
     controlExercise();
     checkExercise();
+    readTemperature();
+}
+
+//Dobavljanje temperature
+function readTemperature() {
+    const temperatureSpan = document.getElementById("temperatureValue");
+
+    const temperatureRef = ref(db, 'data/Celsius');
+
+    get(temperatureRef)
+        .then((snapshot) => {
+            const temperatureData = snapshot.val();
+            if (temperatureData) {
+                const currentTemperature = temperatureData;
+                updateTemperatureDisplay(currentTemperature, temperatureSpan);
+            } else {
+                console.log("No temperature data available.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error reading temperature from Firebase:", error);
+        });
+}
+
+// Funkcija za ažuriranje prikaza temperature
+function updateTemperatureDisplay(temperature, temperatureSpan) {
+    if (temperatureSpan) {
+        temperatureSpan.textContent = temperature.toFixed(2) + "°C";
+    }
 }
 
 function controlExercise() {
@@ -118,6 +148,182 @@ const congratulationMessages = [
     "Spectacular! Your fitness journey is thriving!"
 ];
 
+function sendPersonalDetails() {
+    update(ref(db, "data/"), {
+        gender: document.getElementById("gender").value.toUpperCase(),
+        weight: parseFloat(document.getElementById("numberOfWeightt").value),
+        name: document.getElementById("firstLastName").value,
+        age: parseInt(document.getElementById("age").value),
+        height: parseFloat(document.getElementById("height").value)
+    }).then(() => {
+        // Pozivanje funkcije za čitanje i prikazivanje podataka nakon što su podaci poslani na Firebase
+        readPersonalDetails();
+        healthStatisticsFunction();
+    }).catch((error) => {
+        alert("error" + error);
+    });
+}
+
+document.getElementById("saveButton").addEventListener("click", sendPersonalDetails);
+
+function readPersonalDetails() {
+    const genderRef = ref(db, 'data/gender');
+    const weightRef = ref(db, 'data/weight');
+    const nameRef = ref(db, 'data/name');
+    const ageRef = ref(db, 'data/age');
+    const heightRef = ref(db, 'data/height');
+
+    get(genderRef)
+        .then((snapshot) => {
+            document.getElementById("gender").value = snapshot.val();
+        })
+        .catch((error) => {
+            console.error("Error reading gender from Firebase:", error);
+        });
+
+    get(weightRef)
+        .then((snapshot) => {
+            document.getElementById("numberOfWeightt").value = snapshot.val();
+        })
+        .catch((error) => {
+            console.error("Error reading weight from Firebase:", error);
+        });
+
+    get(nameRef)
+        .then((snapshot) => {
+            document.getElementById("firstLastName").value = snapshot.val();
+        })
+        .catch((error) => {
+            console.error("Error reading name from Firebase:", error);
+        });
+
+    get(ageRef)
+        .then((snapshot) => {
+            document.getElementById("age").value = snapshot.val();
+        })
+        .catch((error) => {
+            console.error("Error reading age from Firebase:", error);
+        });
+
+    get(heightRef)
+        .then((snapshot) => {
+            document.getElementById("height").value = snapshot.val();
+        })
+        .catch((error) => {
+            console.error("Error reading height from Firebase:", error);
+        });
+}
+
+// Učitavanje podataka iz Firebase-a prilikom pokretanja stranice
+document.addEventListener("DOMContentLoaded", () => {
+    readPersonalDetails();
+    healthStatisticsFunction();
+});
+
+function clearPersonalDetails() {
+    var BMISpan = document.getElementById("BMIspan");
+    var FatSpan = document.getElementById("bodyFatSpan");
+    var idealWeightSpan = document.getElementById("idealWeightSpan");
+    var LosingWeight = document.getElementById("LosingWeight");
+    var maintainWeight = document.getElementById("maintainWeight");
+    var gainWeight = document.getElementById("gainWeight");
+
+    BMISpan.textContent = "";
+    FatSpan.textContent = "";
+    idealWeightSpan.textContent = "";
+    LosingWeight.textContent = "";
+    maintainWeight.textContent = "";
+    gainWeight.textContent = "";
+
+    update(ref(db, "data/"), {
+        gender: " ",
+        weight: null,
+        name: " ",
+        age: null,
+        height: null
+    }).then(() => {
+        readPersonalDetails();
+        healthStatisticsFunction();
+    }).catch((error) => {
+        alert("error" + error);
+    });
+}
+
+document.getElementById("deleteButton").addEventListener("click", clearPersonalDetails);
+
+//Health statistics
+function healthStatisticsFunction() {
+    const genderRef = ref(db, 'data/gender');
+    const weightRef = ref(db, 'data/weight');
+    const ageRef = ref(db, 'data/age');
+    const heightRef = ref(db, 'data/height');
+    var genderVal;
+    var weightVal;
+    var ageVal;
+    var heightVal;
+
+    var BMISpan = document.getElementById("BMIspan");
+    var FatSpan = document.getElementById("bodyFatSpan");
+    var idealWeightSpan = document.getElementById("idealWeightSpan");
+    var LosingWeight = document.getElementById("LosingWeight");
+
+    Promise.all([
+        get(genderRef).then((snapshot) => { genderVal = snapshot.val(); }),
+        get(weightRef).then((snapshot) => { weightVal = snapshot.val(); }),
+        get(ageRef).then((snapshot) => { ageVal = snapshot.val(); }),
+        get(heightRef).then((snapshot) => { heightVal = snapshot.val(); })
+    ]).then(() => {
+        if (!isNaN(weightVal) && !isNaN(heightVal)) {
+            var bmi = (weightVal / ((heightVal / 100) * (heightVal / 100))).toFixed(2);
+
+            if (!isNaN(bmi)) {
+                BMISpan.innerHTML = bmi + " kg/m^2";
+
+                var genderNumber = genderVal === 'M' ? 1 : 0;
+
+                // Postotak tjelesne masti
+                if (!isNaN(ageVal) && !isNaN(genderNumber)) {
+                    FatSpan.innerHTML = ((((1.20 * bmi) + (0.23 * ageVal) - (10.8 * genderNumber) - 5.4) / 100) * 100).toFixed(2) + " %";
+                }
+
+                if (!isNaN(heightVal)) {
+                    idealWeightSpan.innerHTML = (22 * ((heightVal / 100) * (heightVal / 100))).toFixed(2) + " kg";
+                }
+
+                //Kalorije
+                if (!isNaN(weightVal) && !isNaN(heightVal) && !isNaN(ageVal) && !isNaN(genderNumber)) {
+                    if (genderNumber === 1) {
+                        LosingWeight.innerHTML = (88.362 + (13.397 * weightVal) + (4.799 * heightVal) - (5.677 * ageVal)).toFixed(2) + " Cal/day";
+                        maintainWeight.innerHTML = (66.47 + (13.75 * weightVal) + (5.003 * heightVal) - (6.75 * ageVal)).toFixed(2) + " Cal/day";
+                        gainWeight.innerHTML = ((66.47 + (13.75 * weightVal) + (5.003 * heightVal) - (6.75 * ageVal)) + 500).toFixed(2) + " Cal/day";
+                    }
+                    if (genderNumber === 0) {
+                        LosingWeight.innerHTML = (447.593 + (9.247 * weightVal) + (3.098 * heightVal) - (4.330 * ageVal)).toFixed(2) + " Cal/day";
+                        maintainWeight.innerHTML = (655.1 + (9.563 * weightVal) + (1.850 * heightVal) - (4.676 * ageVal)).toFixed(2) + " Cal/day";
+                        gainWeight.innerHTML = ((655.1 + (9.563 * weightVal) + (1.850 * heightVal) - (4.676 * ageVal)) + 500).toFixed(2) + " Cal/day";
+                    }
+                }
+            }
+            genderNumber = null;
+        }
+    }).catch((error) => {
+        console.error("Error reading data from Firebase:", error);
+    });
+}
+
+// Provjera unosa za spol
+function validateGenderInput(event) {
+    const spol = ['M', 'F'];
+
+    const input = event.target.value.toUpperCase();
+
+    if (!spol.includes(input)) {
+        event.target.value = '';
+    }
+}
+
+document.getElementById("gender").addEventListener("input", validateGenderInput);
+
 function sendPushUpSet(numberOfPushUps) {
     update(ref(db, "data/"), {
         wantedPushUps: numberOfPushUps
@@ -157,7 +363,23 @@ function checkExercise() {
             totalBurntCalories += caloriesBurned; // Ažuriranje ukupne sume kalorija
             burntCalories.value = totalBurntCalories.toFixed(2);
             pushUp.value = enteredPushUps;
-            funkcija(caloriesBurned.toFixed(2));
+
+            // Računanje prosječne temperature
+            var temperatureInputs = document.querySelectorAll("#temperatureValue");
+            var temperatureSum = 0;
+            var temperatureCount = 0;
+            temperatureInputs.forEach(function (i) {
+                var temperatureValue = parseFloat(i.textContent); // Dobavljanje temperature iz teksta
+                if (!isNaN(temperatureValue)) {
+                    temperatureSum += temperatureValue;
+                    temperatureCount++;
+                }
+            });
+            var averageTemperature = temperatureCount > 0 ? temperatureSum / temperatureCount : 0;
+
+            // Dodavanje kalorija i prosječne temperature u historiju
+            funkcija(caloriesBurned.toFixed(2), averageTemperature.toFixed(2));
+
             drawChart();
         } else {
             console.error("Invalid input for MET, weight, or exercise duration.");
@@ -196,7 +418,7 @@ btnOk.addEventListener("click", closepopup);
 var i = 0;
 
 //Funkcija za spremanje podataka, historija
-function funkcija(kalorije) {
+function funkcija(kalorije, prosjecnaTemperatura) {
     var currentTime = new Date();
     var day = currentTime.getDate();
     var month = currentTime.getMonth() + 1;
@@ -229,6 +451,11 @@ function funkcija(kalorije) {
         <p>No. Calories</p>
         <p>${kalorije}</p >
     </div>
+    <div class="peti">
+        <p>Average Temperature: </p>
+        <p>${prosjecnaTemperatura}°C</p>
+    </div>
+
     <div class="ugasi">
         X
     </div>
@@ -245,7 +472,7 @@ function funkcija(kalorije) {
     document.getElementById('totalPushUps').innerText = totalPushUps;
     document.getElementById('totalCalories').innerText = totalCalories.toFixed(2);
 
-    // Ažuriranje podataka za grafikon
+    // Ažuriranje podataka za graf
     pushUpData.push({
         date: new Date().toLocaleString(),
         pushUps: parseInt(pushUp.value), // Dodajemo samo ako je pushUp.value broj

@@ -22,11 +22,111 @@
     </div>
 
     <div class="container">
+        <h1 class="title">TIME FOR PUSH-UPS</h1>
         <div class="imagePushUp" id="pushUpImage">
             <img src="./images/sklek-dole.jpeg" alt="Push-Up Down" id="imgDole">
             <img src="./images/sklek-pokret.jpeg" alt="Push-Up Moving" id="imgPokret">
             <img src="./images/sklek-gore.jpeg" alt="Push-Up Up" id="imgGore">
         </div>
+        <div class="personalDetails">
+            <h2 class="titleEnterDetails">Enter your personal details</h2>
+            <div class="contentDetails">
+                <div class="left">
+                    <label>Gender (M/F):</label>
+                    <input type="text" id="gender">
+                    <br><br>
+                    <label>Weight:</label>
+                    <input type="number" id="numberOfWeightt">
+                </div>
+                <div class="middle">
+                    <label>First and last name:</label>
+                    <input type="text" id="firstLastName">
+                </div>
+                <div class="right">
+                    <label>Age:</label>
+                    <input type="number" id="age">
+                    <br> <br>
+                    <label>Height:</label>
+                    <input type="number" id="height">
+                </div>
+            </div>
+            <button id="saveButton">Save Data</button>
+            <button id="deleteButton">Delete Data</button>
+        </div>
+
+        <div class="healthStatistics">
+            <h2 class="titleEnterDetails">Health Statistics</h2>
+            <div class="contentHealthStatistics">
+                <div class="healthStatisticsDiv">
+                    <div class="BMI">
+                        <div class="BMIicon">
+                            <img src="images/BMI image.jpg" alt="BMI">
+                        </div>
+                        <div class="BMIvalues">
+                            <p>BMI</p>
+                            <span id="BMIspan"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="bodyFat">
+                        <div class="bodyFaticon">
+                            <img src="images/Body Fat image.jpg" alt="BMI">
+                        </div>
+                        <div class="bodyFatvalues">
+                            <p>Body Fat</p>
+                            <span id="bodyFatSpan"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="healthStatisticsDiv">
+                    <div class="idealWeight">
+                        <div class="idealWeighticon">
+                            <img src="images/Ideal Weight image.jpg" alt="BMI">
+                        </div>
+                        <div class="idealWeightValues">
+                            <p>Ideal Weight</p>
+                            <span id="idealWeightSpan"></span>
+                        </div>
+                    </div>
+
+                    <div class="bodyType">
+                        <div class="bodyTypeicon">
+                            <img src="images/Body Type image.jpg" alt="BMI">
+                        </div>
+                        <div class="bodyTypeValues">
+                            <p>To Lose Weight</p>
+                            <span id="LosingWeight"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="healthStatisticsDiv">
+                    <div class="idealWeight">
+                        <div class="idealWeighticon">
+                            <img src="images/Ideal Weight image.jpg" alt="BMI">
+                        </div>
+                        <div class="idealWeightValues">
+                            <p>To Mintain Weight</p>
+                            <span id="maintainWeight"></span>
+                        </div>
+                    </div>
+
+                    <div class="bodyType">
+                        <div class="bodyTypeicon">
+                            <img src="images/Body Type image.jpg" alt="BMI">
+                        </div>
+                        <div class="bodyTypeValues">
+                            <p>To Gain Weight</p>
+                            <span id="gainWeight"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="labelInput">
             <label>Enter your weight(kg):</label>
             <br>
@@ -48,6 +148,10 @@
             <br>
             <input type="number" readonly id="burntCalories">
         </div>
+        <div class="temperature">
+            <p>Temperature: <span id="temperatureValue"></span></p>
+        </div>
+
         <div>
             <p>ACTIVITIES:</p>
         </div>
@@ -61,8 +165,10 @@
         </div>
     </div>
 
-    <script src="scriptPushUp.js" type="module"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="scriptPushUp.js" type="module"></script>
 
 </body>
 
