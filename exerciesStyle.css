@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 * {
     font-family: 'Ubuntu';
     user-select: none;
@@ -29,6 +31,71 @@ body {
     position: absolute;
     top: 20%;
     right: 10%;
+    font-size: 1.2rem;
+}
+
+.left-sidebar {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+}
+
+.banner {
+    position: relative;
+    width: 200px;
+    height: 600px;
+    background-color: #52057B;
+    /* Početna boja je #52057B */
+    background-image: linear-gradient(45deg, #52057B, #892CDC, #BC6FF1);
+    /* Gradient boja */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: transparent;
+    /* Tekst boje postavljen na transparentno */
+    text-align: center;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* Sjena ispod teksta */
+}
+
+.banner-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    -webkit-text-stroke: 1px white;
+    /* 3D efekat za slova */
+    -webkit-text-fill-color: #fff;
+    /* Boja teksta */
+    font-family: 'Lobster', cursive;
+}
+
+.banner-decoration {
+    position: absolute;
+    bottom: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150%;
+    height: 100%;
+    background-color: #52057B;
+    /* Početna boja je #1abc9c */
+    clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+    animation: swing 3s infinite alternate;
+}
+
+@keyframes swing {
+    0% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(-50%) rotate(10deg);
+    }
 }
 
 .blur {
@@ -44,7 +111,7 @@ body {
 }
 
 .checkmark {
-    color: #6D9886;
+    color: #BC6FF1;
     height: 45px;
     width: 45px;
     margin-bottom: 25px;
@@ -53,7 +120,7 @@ body {
 .popup {
     height: 250px;
     width: 300px;
-    background-color: #212121;
+    background-color: #080808;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -62,19 +129,20 @@ body {
 }
 
 .popuptext {
-    color: #D9CAB3;
+    color: #BC6FF1;
     text-align: center;
     width: 80%;
 }
 
 .btnok {
-    color: #212121;
-    background-color: #6D9886;
+    color: black;
+    background-color: #BC6FF1;
     padding: 7px;
     border-radius: 5px;
     width: 60px;
     height: fit-content;
     text-align: center;
+    font-weight: bold;
     margin-top: 25px;
 }
 
@@ -153,7 +221,7 @@ img {
     border-radius: 5px;
     background-color: #52057B;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     transition: transform 0.2s, background-color 0.2s;
 }
@@ -164,7 +232,41 @@ img {
 }
 
 .personalDetails label {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+}
+
+.buttonPersDetails {
+    display: flex;
+    justify-content: space-between;
+}
+
+#saveButton,
+#deleteButton {
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    background-color: #52057B;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.3s;
+    cursor: pointer;
+    width: 35%;
+    margin-top: 20px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+#saveButton:hover {
+    background-color: #892CDC;
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+#deleteButton:hover {
+    background-color: red;
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .healthStatistics {
@@ -211,39 +313,52 @@ img {
 }
 
 .labelInput {
-    border: none;
-    padding: 2.5px;
-    border-radius: 5px;
-    background-color: #D9CAB3;
-    color: #0F3D3E;
-    box-shadow: 0 1px 5px #6D9886;
-    font-size: 1.2rem;
-    font-weight: bold;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #52057B;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-#startExerciseBtn {
-    background-color: #6D9886;
-    color: #F1F1F1;
+.labelInput input {
+    border: none;
+    width: 90%;
     padding: 5px;
-    cursor: pointer;
-    border: none;
     border-radius: 5px;
-    box-shadow: 0 0px 4px #D9CAB3;
-    font-size: 0.8rem;
+    background-color: #52057B;
+    color: white;
+    font-size: 1rem;
     font-weight: bold;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-#startExerciseBtn:hover {
-    background-color: #212121;
-    color: #D9CAB3;
+.labelInput input:focus {
+    background-color: #892CDC;
+    transform: scale(1.05);
 }
+
+.labelInput input[readonly] {
+    pointer-events: none;
+    background-color: #52057B;
+}
+
+
+.labelInput label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
 
 .notificationsContainer,
 .notificationsContainerSquat {
     margin-top: 10px;
     width: 100%;
-    height: 300px;
+    height: 450px;
     overflow-y: scroll;
     margin: 0;
     margin-bottom: 50px;
@@ -257,8 +372,10 @@ img {
 .ugasi {
     display: flex;
     flex-direction: column;
-    color: #212121;
+    color: #BC6FF1;
     text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .notifikacija {
@@ -266,14 +383,13 @@ img {
     justify-content: space-between;
     height: 100px;
     width: 80%;
-    background-color: #D9CAB3;
-    color: #212121;
+    background-color: #101010;
     padding: 10px;
-    color: white;
     position: relative;
     margin-left: auto;
     margin-right: auto;
     border-bottom: dashed;
+    border-color: #52057B;
 }
 
 .ugasi {
@@ -282,60 +398,175 @@ img {
     top: 40%;
     width: 25px;
     text-align: center;
-    border: 2px solid white;
+    border: 2px solid #BC6FF1;
     cursor: pointer;
-    background-color: #D9CAB3;
-    color: black;
+    background-color: #101010;
+    color: BC6FF1;
     border-radius: 5px;
 }
 
+#totalPushUps,
+#totalCalories {
+    font-size: 1.2rem;
+}
+
 canvas {
-    background-color: #1d1c1c;
+    background-color: #101010;
 }
 
 #myChart,
 #myChartSquat {
-    width: 80%;
     margin: 0 auto;
     /* Centrirajte grafikon */
 }
 
-@media only screen and (max-width: 450px) {
-    .imagePushUp img {
-        height: 250px;
+/* Stilovi za tablete */
+@media screen and (max-width: 1024px) {
+    .title {
+        text-align: center;
     }
 
-    .imageSquat img {
-        height: 250px;
+    /* Ograničavanje širine sadržaja na ekranu */
+    .container {
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
-    .notifikacija {
-        width: 70%;
+    .left-sidebar {
+        display: none;
+        /* Sakrijte bočnu traku na tabletima */
     }
 
-    input {
-        width: 97%;
+    .banner {
+        width: 100%;
+        /* Punjenje širine ekrana na tabletima */
+        height: auto;
+        /* Automatska visina za prilagođavanje sadržaju */
+    }
+
+    .banner-content {
+        font-size: 1.5em;
+        /* Smanjite veličinu teksta u baneru za tablete */
+    }
+
+    .banner-decoration {
+        display: none;
+        /* Sakrijte ukrasnu traku na tabletima */
+    }
+
+    .buttonPersDetails {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #saveButton,
+    #deleteButton {
+        width: 35%;
+        /* Puno širina za buttone */
+        margin-bottom: 10px;
+        /* Razmak između buttona */
+    }
+
+    .personalDetails,
+    .healthStatistics,
+    .labelInput {
+        width: 90%;
+        /* Smanjite širinu formi za unos podataka za bolje prilagođavanje na tabletima */
+    }
+
+    img {
+        width: 100%;
+        /* Širina slike */
+        display: block;
+        /* Blok element */
+        margin: 0 auto;
+        /* Centriranje */
+    }
+
+    .BMI,
+    .bodyFat,
+    .bodyType,
+    .idealWeight {
+        width: 90%;
+    }
+
+    .labelInput input,
+    .labelInput label {
+        width: 90%;
+        /* Postavljanje širine elemenata na 90% */
+        text-align: center;
+    }
+
+    .ugasi {
+        right: 10px;
+        /* Pomjeranje dugmeta "Ugasi" na desnu stranu */
+        left: initial;
+        /* Resetovanje položaja s lijeve strane */
+        width: auto;
+        /* Postavljanje širine na auto kako bi se prilagodila širini sadržaja */
+        top: initial;
+        /* Resetovanje položaja odozgo */
+        top: 50%;
+        /* Pomjeranje dugmeta "Ugasi" prema dnu */
+        transform: translateX(0);
+        /* Resetovanje horizontalnog pomjeranja */
     }
 
     .notificationsContainer,
     .notificationsContainerSquat {
-        width: 100%;
+        height: auto;
+        /* Automatska visina za prilagođavanje sadržaju */
+        overflow-y: visible;
+        /* Omogućite prirodni protok na tabletima */
     }
 
 }
 
-@media only screen and (max-width: 400px) {
-    .imagePushUp img {
-        height: 250px;
+
+/* Mobilni stilovi */
+@media screen and (max-width: 768px) {
+
+    .temperature {
+        display: none;
     }
 
-    .imageSquat img {
-        height: 200px;
+    .contentDetails {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left,
+    .middle,
+    .right {
+        flex-basis: 100%;
+        margin-bottom: 20px;
+        width: 90%;
+        text-align: center;
+    }
+
+    #saveButton,
+    #deleteButton {
+        width: 90%;
+        /* Puno širina za buttone */
+    }
+
+    .healthStatisticsDiv {
+        flex-direction: column;
+        /* Postavljanje svakog diva jedan ispod drugog */
+        align-items: center;
+        /* Centriranje elemenata unutar diva */
     }
 
     .notifikacija {
-        width: 65%;
-        height: 130px;
+        flex-direction: column;
+        /* Postavite notifikacije jednu ispod druge na mobilnim uređajima */
+        height: auto;
+        /* Automatska visina za prilagođavanje sadržaju */
+        width: 90%;
     }
 
+    #myChart {
+        display: none !important;
+        /* Skrivanje grafa na mobilnim uređajima */
+    }
 }

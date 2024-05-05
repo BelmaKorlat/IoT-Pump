@@ -21,17 +21,135 @@
         </div>
     </div>
 
+    <div class="left-sidebar">
+        <div class="banner">
+            <div class="banner-content">
+                <h2>F</h2>
+                <h2>I</h2>
+                <h2>T</h2>
+                <h2>C</h2>
+                <h2>C</h2>
+                <h2>2</h2>
+                <h2>0</h2>
+                <h2>2</h2>
+                <h2>4</h2>
+            </div>
+            <div class="banner-decoration"></div>
+        </div>
+    </div>
+
     <div class="container">
+        <h1 class="title">TIME FOR SQUATS</h1>
         <div class="imageSquat" id="squatImage">
             <img src="./images/Cucanj-dole.jpg" alt="Squat Down" id="imgDole">
             <img src="./images/Cucanj-pokret.jpg" alt="Squat Moving" id="imgPokret">
             <img src="./images/Cucanj-gore.jpg" alt="Squat Up" id="imgGore">
         </div>
+
+        <div class="personalDetails">
+            <h2 class="titleEnterDetails">Enter your personal details</h2>
+            <div class="contentDetails">
+                <div class="left">
+                    <label>Gender (M/F):</label>
+                    <input type="text" id="gender">
+                    <br><br>
+                    <label>Weight:</label>
+                    <input type="number" id="numberOfWeight">
+                </div>
+                <div class="middle">
+                    <label>First and last name:</label>
+                    <input type="text" id="firstLastName">
+                </div>
+                <div class="right">
+                    <label>Age:</label>
+                    <input type="number" id="age">
+                    <br> <br>
+                    <label>Height:</label>
+                    <input type="number" id="height">
+                </div>
+            </div>
+            <div class="buttonPersDetails">
+                <button id="saveButton">Save & Calculate Data</button>
+                <button id="deleteButton">Delete Data</button>
+            </div>
+        </div>
+
+        <div class="healthStatistics">
+            <h2 class="titleEnterDetails">Health Statistics</h2>
+            <div class="contentHealthStatistics">
+                <div class="healthStatisticsDiv">
+                    <div class="BMI">
+                        <div class="BMIicon">
+                            <img src="images/BMI image.jpg" alt="BMI">
+                        </div>
+                        <div class="BMIvalues">
+                            <p>BMI</p>
+                            <span id="BMIspan"></span> <br>
+                            <span id="BMItxt"></span>
+
+                        </div>
+                    </div>
+
+                    <div class="bodyFat">
+                        <div class="bodyFaticon">
+                            <img src="images/Body Fat image.jpg" alt="BMI">
+                        </div>
+                        <div class="bodyFatvalues">
+                            <p>Body Fat</p>
+                            <span id="bodyFatSpan"></span> <br>
+                            <span id="Fattxt"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="healthStatisticsDiv">
+                    <div class="idealWeight">
+                        <div class="idealWeighticon">
+                            <img src="images/Ideal Weight image.jpg" alt="BMI">
+                        </div>
+                        <div class="idealWeightValues">
+                            <p>Ideal Weight</p>
+                            <span id="idealWeightSpan"></span>
+                        </div>
+                    </div>
+
+                    <div class="bodyType">
+                        <div class="bodyTypeicon">
+                            <img src="images/Calories img.jpg" alt="cal">
+                        </div>
+                        <div class="bodyTypeValues">
+                            <p>To Lose Weight</p>
+                            <span id="LosingWeight"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="healthStatisticsDiv">
+                    <div class="idealWeight">
+                        <div class="idealWeighticon">
+                            <img src="images/Calories img.jpg" alt="cal">
+                        </div>
+                        <div class="idealWeightValues">
+                            <p>To Mintain Weight</p>
+                            <span id="maintainWeight"></span>
+                        </div>
+                    </div>
+
+                    <div class="bodyType">
+                        <div class="bodyTypeicon">
+                            <img src="images/Calories img.jpg" alt="cal">
+                        </div>
+                        <div class="bodyTypeValues">
+                            <p>To Gain Weight</p>
+                            <span id="gainWeight"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="labelInput">
-            <label>Enter your weight(kg):</label>
-            <br>
-            <input type="number" id="numberOfWeightS">
-            <br> <br>
+            <h2 class="titleEnterDetails">Get Ready to Do Squats</h2>
             <label>Enter your MET(3-6: medium; 6-10: hard ) intensity:</label>
             <br>
             <input type="number" id="numberOfMetS" min="3" max="10">
@@ -48,13 +166,18 @@
             <br>
             <input type="number" readonly id="burntCaloriesS">
         </div>
+
+        <div class="temperature">
+            <p>Temperature: <span id="temperatureValue"></span></p>
+        </div>
+
         <div>
             <p>ACTIVITIES:</p>
         </div>
         <div class="notificationsContainerSquat" id="taskoviSquat">
         </div>
 
-        <canvas id="myChartSquat" style="width: 80%;"></canvas>
+        <canvas id="myChartSquat" style="width: 81%;"></canvas>
         <div id="statsContainer">
             <p>Total Squats: <span id="totalSquats">0</span></p>
             <p>Total Calories Burned: <span id="totalCaloriesS">0</span></p>

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Push-Ups</title>
     <link rel="stylesheet" href="exerciesStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+
 </head>
 
 <body id="pushUpBody">
@@ -21,6 +23,24 @@
         </div>
     </div>
 
+    <div class="left-sidebar">
+        <div class="banner">
+            <div class="banner-content">
+                <h2>F</h2>
+                <h2>I</h2>
+                <h2>T</h2>
+                <h2>C</h2>
+                <h2>C</h2>
+                <h2>2</h2>
+                <h2>0</h2>
+                <h2>2</h2>
+                <h2>4</h2>
+            </div>
+            <div class="banner-decoration"></div>
+        </div>
+    </div>
+
+
     <div class="container">
         <h1 class="title">TIME FOR PUSH-UPS</h1>
         <div class="imagePushUp" id="pushUpImage">
@@ -28,6 +48,7 @@
             <img src="./images/sklek-pokret.jpeg" alt="Push-Up Moving" id="imgPokret">
             <img src="./images/sklek-gore.jpeg" alt="Push-Up Up" id="imgGore">
         </div>
+
         <div class="personalDetails">
             <h2 class="titleEnterDetails">Enter your personal details</h2>
             <div class="contentDetails">
@@ -36,7 +57,7 @@
                     <input type="text" id="gender">
                     <br><br>
                     <label>Weight:</label>
-                    <input type="number" id="numberOfWeightt">
+                    <input type="number" id="numberOfWeight">
                 </div>
                 <div class="middle">
                     <label>First and last name:</label>
@@ -50,8 +71,10 @@
                     <input type="number" id="height">
                 </div>
             </div>
-            <button id="saveButton">Save Data</button>
-            <button id="deleteButton">Delete Data</button>
+            <div class="buttonPersDetails">
+                <button id="saveButton">Save & Calculate Data</button>
+                <button id="deleteButton">Delete Data</button>
+            </div>
         </div>
 
         <div class="healthStatistics">
@@ -64,7 +87,8 @@
                         </div>
                         <div class="BMIvalues">
                             <p>BMI</p>
-                            <span id="BMIspan"></span>
+                            <span id="BMIspan"></span> <br>
+                            <span id="BMItxt"></span>
 
                         </div>
                     </div>
@@ -75,7 +99,8 @@
                         </div>
                         <div class="bodyFatvalues">
                             <p>Body Fat</p>
-                            <span id="bodyFatSpan"></span>
+                            <span id="bodyFatSpan"></span> <br>
+                            <span id="Fattxt"></span>
                         </div>
                     </div>
                 </div>
@@ -93,7 +118,7 @@
 
                     <div class="bodyType">
                         <div class="bodyTypeicon">
-                            <img src="images/Body Type image.jpg" alt="BMI">
+                            <img src="images/Calories img.jpg" alt="cal">
                         </div>
                         <div class="bodyTypeValues">
                             <p>To Lose Weight</p>
@@ -105,7 +130,7 @@
                 <div class="healthStatisticsDiv">
                     <div class="idealWeight">
                         <div class="idealWeighticon">
-                            <img src="images/Ideal Weight image.jpg" alt="BMI">
+                            <img src="images/Calories img.jpg" alt="cal">
                         </div>
                         <div class="idealWeightValues">
                             <p>To Mintain Weight</p>
@@ -115,7 +140,7 @@
 
                     <div class="bodyType">
                         <div class="bodyTypeicon">
-                            <img src="images/Body Type image.jpg" alt="BMI">
+                            <img src="images/Calories img.jpg" alt="cal">
                         </div>
                         <div class="bodyTypeValues">
                             <p>To Gain Weight</p>
@@ -124,14 +149,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="labelInput">
-            <label>Enter your weight(kg):</label>
-            <br>
-            <input type="number" id="numberOfWeight">
-            <br> <br>
+            <h2 class="titleEnterDetails">Get Ready to Do Push-Ups</h2>
             <label>Enter your MET(3-6: medium; 6-10: hard ) intensity:</label>
             <br>
             <input type="number" id="numberOfMet" min="3" max="10">
@@ -148,6 +169,7 @@
             <br>
             <input type="number" readonly id="burntCalories">
         </div>
+
         <div class="temperature">
             <p>Temperature: <span id="temperatureValue"></span></p>
         </div>
@@ -158,7 +180,7 @@
         <div class="notificationsContainer" id="taskovi">
         </div>
 
-        <canvas id="myChart" style="width: 80%;"></canvas>
+        <canvas id="myChart" style="width:81%;"></canvas>
         <div id="statsContainer">
             <p>Total Push-ups: <span id="totalPushUps">0</span></p>
             <p>Total Calories Burned: <span id="totalCalories">0</span></p>

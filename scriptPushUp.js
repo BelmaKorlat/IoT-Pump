@@ -71,6 +71,32 @@ function Load() {
     readTemperature();
 }
 
+window.addEventListener('DOMContentLoaded', () => {
+    const banner = document.querySelector('.banner');
+    const notificationContainer = document.querySelector('#taskovi'); đ
+
+
+    const bannerHeight = banner.offsetHeight;
+    const initialPosition = banner.offsetTop;
+
+    window.addEventListener('scroll', () => {
+        const containerTop = notificationContainer.getBoundingClientRect().top;
+
+        if (containerTop <= bannerHeight) {
+            banner.style.position = 'absolute';
+            banner.style.top = containerTop + 'px';
+        } else {
+            banner.style.position = 'fixed';
+            banner.style.top = '35px';
+        }
+
+        if (window.pageYOffset <= initialPosition) {
+            banner.style.position = 'absolute';
+            banner.style.top = initialPosition + 'px';
+        }
+    });
+});
+
 //Dobavljanje temperature
 function readTemperature() {
     const temperatureSpan = document.getElementById("temperatureValue");
@@ -151,7 +177,7 @@ const congratulationMessages = [
 function sendPersonalDetails() {
     update(ref(db, "data/"), {
         gender: document.getElementById("gender").value.toUpperCase(),
-        weight: parseFloat(document.getElementById("numberOfWeightt").value),
+        weight: parseFloat(document.getElementById("numberOfWeight").value),
         name: document.getElementById("firstLastName").value,
         age: parseInt(document.getElementById("age").value),
         height: parseFloat(document.getElementById("height").value)
@@ -183,7 +209,7 @@ function readPersonalDetails() {
 
     get(weightRef)
         .then((snapshot) => {
-            document.getElementById("numberOfWeightt").value = snapshot.val();
+            document.getElementById("numberOfWeight").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading weight from Firebase:", error);
@@ -222,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function clearPersonalDetails() {
     var BMISpan = document.getElementById("BMIspan");
+    var BMItxt = document.getElementById("BMItxt");
     var FatSpan = document.getElementById("bodyFatSpan");
     var idealWeightSpan = document.getElementById("idealWeightSpan");
     var LosingWeight = document.getElementById("LosingWeight");
@@ -229,6 +256,7 @@ function clearPersonalDetails() {
     var gainWeight = document.getElementById("gainWeight");
 
     BMISpan.textContent = "";
+    BMItxt.textContent = "";
     FatSpan.textContent = "";
     idealWeightSpan.textContent = "";
     LosingWeight.textContent = "";
@@ -263,7 +291,9 @@ function healthStatisticsFunction() {
     var heightVal;
 
     var BMISpan = document.getElementById("BMIspan");
+    var BMItxt = document.getElementById("BMItxt");
     var FatSpan = document.getElementById("bodyFatSpan");
+    var Fattxt = document.getElementById("Fattxt");
     var idealWeightSpan = document.getElementById("idealWeightSpan");
     var LosingWeight = document.getElementById("LosingWeight");
 
@@ -279,11 +309,43 @@ function healthStatisticsFunction() {
             if (!isNaN(bmi)) {
                 BMISpan.innerHTML = bmi + " kg/m^2";
 
+                if (bmi <= 18.5) {
+                    BMItxt.innerHTML = "Underweight"
+                }
+
+                if (bmi > 18.5 && bmi <= 24.9) {
+                    BMItxt.innerHTML = "Normal weight"
+                }
+                if (bmi > 24.9 && bmi < 29.9) {
+                    BMItxt.innerHTML = "Overweight"
+                }
+                if (bmi > 29.9 && bmi < 34.9) {
+                    BMItxt.innerHTML = "Obesity Class II"
+                }
+                if (bmi > 34.9 && bmi < 39.9) {
+                    BMItxt.innerHTML = "Obesity Class III"
+                }
+                if (bmi > 40) {
+                    BMItxt.innerHTML = "Morbid obesity"
+                }
+
                 var genderNumber = genderVal === 'M' ? 1 : 0;
 
                 // Postotak tjelesne masti
                 if (!isNaN(ageVal) && !isNaN(genderNumber)) {
                     FatSpan.innerHTML = ((((1.20 * bmi) + (0.23 * ageVal) - (10.8 * genderNumber) - 5.4) / 100) * 100).toFixed(2) + " %";
+                    if (parseFloat(FatSpan.innerHTML) <= 18.5) {
+                        Fattxt.innerHTML = "Low value"
+                    }
+                    if (parseFloat(FatSpan.innerHTML) > 18.5 && parseFloat(FatSpan.innerHTML) <= 24.9) {
+                        Fattxt.innerHTML = "Normal value"
+                    }
+                    if (parseFloat(FatSpan.innerHTML) > 24.9 && parseFloat(FatSpan.innerHTML) <= 29.9) {
+                        Fattxt.innerHTML = "Increased value"
+                    }
+                    if (parseFloat(FatSpan.innerHTML) > 29.9) {
+                        Fattxt.innerHTML = "High value"
+                    }
                 }
 
                 if (!isNaN(heightVal)) {
@@ -544,13 +606,13 @@ function createChart() {
             datasets: [{
                 label: 'Number of Push-ups',
                 data: pushUpData.map(entry => entry.pushUps),
-                backgroundColor: '#d9cab38f',
+                backgroundColor: '#52057B',
                 borderColor: '#D9CAB3',
                 borderWidth: 1
             }, {
                 label: 'Calories Burned',
                 data: pushUpData.map(entry => entry.calories),
-                backgroundColor: '#6d988665',
+                backgroundColor: '#BC6FF1',
                 borderColor: '#6D9886',
                 borderWidth: 1
             }]
@@ -574,7 +636,7 @@ function drawChart() {
     createChart();
 }
 
-// Učitaj podatke iz localStorage-a prilikom pokretanja stranice
+// Učitavaje podataka iz localStorage-a prilikom pokretanja stranice
 document.addEventListener("DOMContentLoaded", () => {
     showTask();
     const chartPushUpData = localStorage.getItem("chartPushUpData");
