@@ -45,9 +45,7 @@ body {
     width: 200px;
     height: 600px;
     background-color: #52057B;
-    /* Početna boja je #52057B */
     background-image: linear-gradient(45deg, #52057B, #892CDC, #BC6FF1);
-    /* Gradient boja */
     overflow: hidden;
     border-radius: 10px;
 }
@@ -58,20 +56,16 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: transparent;
-    /* Tekst boje postavljen na transparentno */
     text-align: center;
     z-index: 1;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    /* Sjena ispod teksta */
 }
 
 .banner-content h2 {
     font-size: 1.8rem;
     margin-bottom: 10px;
     -webkit-text-stroke: 1px white;
-    /* 3D efekat za slova */
     -webkit-text-fill-color: #fff;
-    /* Boja teksta */
     font-family: 'Lobster', cursive;
 }
 
@@ -83,7 +77,6 @@ body {
     width: 150%;
     height: 100%;
     background-color: #52057B;
-    /* Početna boja je #1abc9c */
     clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
     animation: swing 3s infinite alternate;
 }
@@ -105,7 +98,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* backdrop-filter: blur(10px); */
     backdrop-filter: blur(5px);
     z-index: 1;
 }
@@ -241,7 +233,9 @@ img {
 }
 
 #saveButton,
-#deleteButton {
+#deleteButton,
+#saveButtonS,
+#deleteButtonS {
     border: none;
     padding: 8px 10px;
     border-radius: 5px;
@@ -401,7 +395,7 @@ img {
     border: 2px solid #BC6FF1;
     cursor: pointer;
     background-color: #101010;
-    color: BC6FF1;
+    color: #BC6FF1;
     border-radius: 5px;
 }
 
@@ -417,16 +411,14 @@ canvas {
 #myChart,
 #myChartSquat {
     margin: 0 auto;
-    /* Centrirajte grafikon */
 }
 
-/* Stilovi za tablete */
+
 @media screen and (max-width: 1024px) {
     .title {
         text-align: center;
     }
 
-    /* Ograničavanje širine sadržaja na ekranu */
     .container {
         max-width: 100%;
         overflow-x: hidden;
@@ -434,24 +426,19 @@ canvas {
 
     .left-sidebar {
         display: none;
-        /* Sakrijte bočnu traku na tabletima */
     }
 
     .banner {
         width: 100%;
-        /* Punjenje širine ekrana na tabletima */
         height: auto;
-        /* Automatska visina za prilagođavanje sadržaju */
     }
 
     .banner-content {
         font-size: 1.5em;
-        /* Smanjite veličinu teksta u baneru za tablete */
     }
 
     .banner-decoration {
         display: none;
-        /* Sakrijte ukrasnu traku na tabletima */
     }
 
     .buttonPersDetails {
@@ -462,25 +449,19 @@ canvas {
     #saveButton,
     #deleteButton {
         width: 35%;
-        /* Puno širina za buttone */
         margin-bottom: 10px;
-        /* Razmak između buttona */
     }
 
     .personalDetails,
     .healthStatistics,
     .labelInput {
         width: 90%;
-        /* Smanjite širinu formi za unos podataka za bolje prilagođavanje na tabletima */
     }
 
     img {
         width: 100%;
-        /* Širina slike */
         display: block;
-        /* Blok element */
         margin: 0 auto;
-        /* Centriranje */
     }
 
     .BMI,
@@ -493,37 +474,26 @@ canvas {
     .labelInput input,
     .labelInput label {
         width: 90%;
-        /* Postavljanje širine elemenata na 90% */
         text-align: center;
     }
 
     .ugasi {
         right: 10px;
-        /* Pomjeranje dugmeta "Ugasi" na desnu stranu */
         left: initial;
-        /* Resetovanje položaja s lijeve strane */
         width: auto;
-        /* Postavljanje širine na auto kako bi se prilagodila širini sadržaja */
         top: initial;
-        /* Resetovanje položaja odozgo */
         top: 50%;
-        /* Pomjeranje dugmeta "Ugasi" prema dnu */
         transform: translateX(0);
-        /* Resetovanje horizontalnog pomjeranja */
     }
 
     .notificationsContainer,
     .notificationsContainerSquat {
         height: auto;
-        /* Automatska visina za prilagođavanje sadržaju */
         overflow-y: visible;
-        /* Omogućite prirodni protok na tabletima */
     }
 
 }
 
-
-/* Mobilni stilovi */
 @media screen and (max-width: 768px) {
 
     .temperature {
@@ -547,26 +517,20 @@ canvas {
     #saveButton,
     #deleteButton {
         width: 90%;
-        /* Puno širina za buttone */
     }
 
     .healthStatisticsDiv {
         flex-direction: column;
-        /* Postavljanje svakog diva jedan ispod drugog */
         align-items: center;
-        /* Centriranje elemenata unutar diva */
     }
 
     .notifikacija {
         flex-direction: column;
-        /* Postavite notifikacije jednu ispod druge na mobilnim uređajima */
         height: auto;
-        /* Automatska visina za prilagođavanje sadržaju */
         width: 90%;
     }
 
     #myChart {
-        display: none !important;
-        /* Skrivanje grafa na mobilnim uređajima */
+        scale: 0.4;
     }
 }
