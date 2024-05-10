@@ -51,26 +51,26 @@
             <div class="contentDetails">
                 <div class="left">
                     <label>Gender (M/F):</label>
-                    <input type="text" id="gender">
+                    <input type="text" id="genderS">
                     <br><br>
                     <label>Weight:</label>
-                    <input type="number" id="numberOfWeight">
+                    <input type="number" id="numberOfWeightS">
                 </div>
                 <div class="middle">
                     <label>First and last name:</label>
-                    <input type="text" id="firstLastName">
+                    <input type="text" id="firstLastNameS">
                 </div>
                 <div class="right">
                     <label>Age:</label>
-                    <input type="number" id="age">
+                    <input type="number" id="ageS">
                     <br> <br>
                     <label>Height:</label>
-                    <input type="number" id="height">
+                    <input type="number" id="heightS">
                 </div>
             </div>
             <div class="buttonPersDetails">
-                <button id="saveButton">Save & Calculate Data</button>
-                <button id="deleteButton">Delete Data</button>
+                <button id="saveButtonS">Save & Calculate Data</button>
+                <button id="deleteButtonS">Delete Data</button>
             </div>
         </div>
 
@@ -152,7 +152,7 @@
             <h2 class="titleEnterDetails">Get Ready to Do Squats</h2>
             <label>Enter your MET(3-6: medium; 6-10: hard ) intensity:</label>
             <br>
-            <input type="number" id="numberOfMet" min="3" max="10">
+            <input type="number" id="numberOfMetS" min="3" max="10">
             <br> <br>
             <label>How many squats would you like to do?</label>
             <br>
@@ -164,7 +164,7 @@
             <br><br>
             <label>Burnt calories:</label>
             <br>
-            <input type="number" readonly id="burntCalories">
+            <input type="number" readonly id="burntCaloriesS">
         </div>
 
         <div class="temperature">
@@ -179,8 +179,8 @@
 
         <canvas id="myChartSquat" style="width: 81%;"></canvas>
         <div id="statsContainer">
-            <p>Total Squats: <span id="totalSquats">0</span></p>
-            <p>Total Calories Burned: <span id="totalCaloriesS">0</span></p>
+            <span id="totalSquats"></span>
+            <span id="totalCaloriesS"></span>
         </div>
     </div>
 

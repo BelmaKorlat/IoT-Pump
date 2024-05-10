@@ -44,9 +44,8 @@
     <div class="container">
         <h1 class="title">TIME FOR PUSH-UPS</h1>
         <div class="imagePushUp" id="pushUpImage">
-            <img src="./images/sklek-dole.jpeg" alt="Push-Up Down" id="imgDole">
-            <img src="./images/sklek-pokret.jpeg" alt="Push-Up Moving" id="imgPokret">
-            <img src="./images/sklek-gore.jpeg" alt="Push-Up Up" id="imgGore">
+            <img src="images/ManPushUp.jpg" alt="Push-Up Down" id="imgDole">
+            <img src="images/womanPushUp.jpg" alt="Push-Up Moving" id="imgPokret">
         </div>
 
         <div class="personalDetails">
@@ -57,7 +56,7 @@
                     <input type="text" id="gender">
                     <br><br>
                     <label>Weight:</label>
-                    <input type="number" id="numberOfWeight">
+                    <input id="numberOfWeight">
                 </div>
                 <div class="middle">
                     <label>First and last name:</label>
@@ -68,7 +67,7 @@
                     <input type="number" id="age">
                     <br> <br>
                     <label>Height:</label>
-                    <input type="number" id="height">
+                    <input id="height">
                 </div>
             </div>
             <div class="buttonPersDetails">
@@ -182,8 +181,8 @@
 
         <canvas id="myChart" style="width:81%;"></canvas>
         <div id="statsContainer">
-            <p>Total Push-ups: <span id="totalPushUps">0</span></p>
-            <p>Total Calories Burned: <span id="totalCalories">0</span></p>
+            <p><span id="totalPushUps"></span></p>
+            <p><span id="totalCalories"></span></p>
         </div>
     </div>
 

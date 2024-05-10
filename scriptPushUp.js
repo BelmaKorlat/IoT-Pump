@@ -73,7 +73,7 @@ function Load() {
 
 window.addEventListener('DOMContentLoaded', () => {
     const banner = document.querySelector('.banner');
-    const notificationContainer = document.querySelector('#taskovi'); đ
+    const notificationContainer = document.querySelector('#taskovi');
 
 
     const bannerHeight = banner.offsetHeight;
@@ -136,18 +136,15 @@ function controlExercise() {
 
 //Mijenjanje slika na osnovu distance
 function updatePushUpImage(distance) {
-    if (distance <= 10) {
+    var genderInput = document.getElementById("gender");
+    var spol = genderInput.value.toUpperCase();
+    if (spol === 'M') {
         imgDole.classList.remove("hidden");
         imgPokret.classList.add("hidden");
-        imgGore.classList.add("hidden");
-    } else if (distance > 10 && distance < 20) {
+
+    } else if (spol === 'F') {
         imgDole.classList.add("hidden");
         imgPokret.classList.remove("hidden");
-        imgGore.classList.add("hidden");
-    } else {
-        imgDole.classList.add("hidden");
-        imgPokret.classList.add("hidden");
-        imgGore.classList.remove("hidden");
     }
 }
 
@@ -174,6 +171,7 @@ const congratulationMessages = [
     "Spectacular! Your fitness journey is thriving!"
 ];
 
+// Function to send personal details to Firebase RTDB
 function sendPersonalDetails() {
     update(ref(db, "data/"), {
         gender: document.getElementById("gender").value.toUpperCase(),
@@ -182,11 +180,11 @@ function sendPersonalDetails() {
         age: parseInt(document.getElementById("age").value),
         height: parseFloat(document.getElementById("height").value)
     }).then(() => {
-        // Pozivanje funkcije za čitanje i prikazivanje podataka nakon što su podaci poslani na Firebase
+        // Calling a function to read and display data after it's sent to Firebase
         readPersonalDetails();
         healthStatisticsFunction();
     }).catch((error) => {
-        alert("error" + error);
+        alert("Error: " + error);
     });
 }
 
@@ -264,11 +262,11 @@ function clearPersonalDetails() {
     gainWeight.textContent = "";
 
     update(ref(db, "data/"), {
-        gender: " ",
-        weight: null,
-        name: " ",
-        age: null,
-        height: null
+        gender: "",
+        weight: 0,
+        name: "",
+        age: 0,
+        height: 0
     }).then(() => {
         readPersonalDetails();
         healthStatisticsFunction();
@@ -464,6 +462,9 @@ var body = document.getElementById("pushUpBody");
 function closepopup() {
     blur.classList.add("hidden");
     body.classList.remove("stop-scrolling");
+    numberOfMet.value = null;
+    numberOfPushUps.value = null;
+    burntCalories.value = null;
 }
 
 function showPopUp(congratulationMessage) {
@@ -492,14 +493,15 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     var formattedDate = `${day}.${month}.${year}`;
     var formattedTime = `${hours}:${minutes}:${seconds}`;
 
-    i += 1;
+    // Brojanje div elemenata
+    var brojSetova = document.querySelectorAll('.notificationsContainer > div').length;
 
     var newTaskDiv = document.createElement("div");
     newTaskDiv.className = "notifikacija";
     newTaskDiv.innerHTML = `
     <div class="prvi">
         <p>Set</p>
-        <p>${i}</p>
+        <p>${brojSetova + 1}</p>
     </div>
     <div class="drugi">
         <p>Date and Time</p>
@@ -514,10 +516,9 @@ function funkcija(kalorije, prosjecnaTemperatura) {
         <p>${kalorije}</p >
     </div>
     <div class="peti">
-        <p>Average Temperature: </p>
+        <p>Average Temperature </p>
         <p>${prosjecnaTemperatura}°C</p>
     </div>
-
     <div class="ugasi">
         X
     </div>
@@ -530,10 +531,6 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     totalPushUps += parseInt(pushUp.value); // Dodajemo samo ako je pushUp.value broj
     totalCalories += parseFloat(kalorije);
 
-    // Ažuriranje HTML-a s ukupnim vrijednostima
-    document.getElementById('totalPushUps').innerText = totalPushUps;
-    document.getElementById('totalCalories').innerText = totalCalories.toFixed(2);
-
     // Ažuriranje podataka za graf
     pushUpData.push({
         date: new Date().toLocaleString(),
@@ -544,6 +541,7 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     createChart();
     drawChart();
 }
+
 
 function savePushUpData() {
     localStorage.setItem("pushUpdata", document.getElementById("taskovi").innerHTML);

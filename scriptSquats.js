@@ -29,9 +29,9 @@ var distanceValue = 0;
 var squatBody = document.getElementById("squatBody");
 squatBody.addEventListener("load", Load);
 
-var numberOfWeight = document.getElementById("numberOfWeight");
-var numberOfMet = document.getElementById("numberOfMet");
-var burntCalories = document.getElementById("burntCalories");
+var numberOfWeightS = document.getElementById("numberOfWeightS");
+var numberOfMet = document.getElementById("numberOfMetS");
+var burntCalories = document.getElementById("burntCaloriesS");
 var startExerciseTime;
 
 var ctx = document.getElementById('myChartSquat').getContext('2d');
@@ -170,23 +170,24 @@ const congratulationMessages = [
     "Spectacular! Your fitness journey is thriving!"
 ];
 
+// Function to send personal details to Firebase RTDB
 function sendPersonalDetails() {
     update(ref(db, "data/"), {
-        gender: document.getElementById("gender").value.toUpperCase(),
-        weight: parseFloat(document.getElementById("numberOfWeight").value),
-        name: document.getElementById("firstLastName").value,
-        age: parseInt(document.getElementById("age").value),
-        height: parseFloat(document.getElementById("height").value)
+        gender: document.getElementById("genderS").value.toUpperCase(),
+        weight: parseFloat(document.getElementById("numberOfWeightS").value),
+        name: document.getElementById("firstLastNameS").value,
+        age: parseInt(document.getElementById("ageS").value),
+        height: parseFloat(document.getElementById("heightS").value)
     }).then(() => {
-        // Pozivanje funkcije za čitanje i prikazivanje podataka nakon što su podaci poslani na Firebase
+        // Calling a function to read and display data after it's sent to Firebase
         readPersonalDetails();
         healthStatisticsFunction();
     }).catch((error) => {
-        alert("error" + error);
+        alert("Error: " + error);
     });
 }
 
-document.getElementById("saveButton").addEventListener("click", sendPersonalDetails);
+document.getElementById("saveButtonS").addEventListener("click", sendPersonalDetails);
 
 function readPersonalDetails() {
     const genderRef = ref(db, 'data/gender');
@@ -197,7 +198,7 @@ function readPersonalDetails() {
 
     get(genderRef)
         .then((snapshot) => {
-            document.getElementById("gender").value = snapshot.val();
+            document.getElementById("genderS").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading gender from Firebase:", error);
@@ -205,7 +206,7 @@ function readPersonalDetails() {
 
     get(weightRef)
         .then((snapshot) => {
-            document.getElementById("numberOfWeight").value = snapshot.val();
+            document.getElementById("numberOfWeightS").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading weight from Firebase:", error);
@@ -213,7 +214,7 @@ function readPersonalDetails() {
 
     get(nameRef)
         .then((snapshot) => {
-            document.getElementById("firstLastName").value = snapshot.val();
+            document.getElementById("firstLastNameS").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading name from Firebase:", error);
@@ -221,7 +222,7 @@ function readPersonalDetails() {
 
     get(ageRef)
         .then((snapshot) => {
-            document.getElementById("age").value = snapshot.val();
+            document.getElementById("ageS").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading age from Firebase:", error);
@@ -229,7 +230,7 @@ function readPersonalDetails() {
 
     get(heightRef)
         .then((snapshot) => {
-            document.getElementById("height").value = snapshot.val();
+            document.getElementById("heightS").value = snapshot.val();
         })
         .catch((error) => {
             console.error("Error reading height from Firebase:", error);
@@ -260,11 +261,11 @@ function clearPersonalDetails() {
     gainWeight.textContent = "";
 
     update(ref(db, "data/"), {
-        gender: " ",
-        weight: null,
-        name: " ",
-        age: null,
-        height: null
+        gender: "",
+        weight: 0,
+        name: "",
+        age: 0,
+        height: 0
     }).then(() => {
         readPersonalDetails();
         healthStatisticsFunction();
@@ -273,7 +274,7 @@ function clearPersonalDetails() {
     });
 }
 
-document.getElementById("deleteButton").addEventListener("click", clearPersonalDetails);
+document.getElementById("deleteButtonS").addEventListener("click", clearPersonalDetails);
 
 //Health statistics
 function healthStatisticsFunction() {
@@ -380,7 +381,7 @@ function validateGenderInput(event) {
     }
 }
 
-document.getElementById("gender").addEventListener("input", validateGenderInput);
+document.getElementById("genderS").addEventListener("input", validateGenderInput);
 
 function sendSquatSet(numberOfSquats) {
     update(ref(db, "data/"), {
@@ -412,7 +413,7 @@ function checkExercise() {
         var exerciseDuration = (endExerciseTime - startExerciseTime) / 1000 / 3600;
 
         var metValue = parseFloat(numberOfMet.value);
-        var weightValue = parseFloat(numberOfWeight.value);
+        var weightValue = parseFloat(numberOfWeightS.value);
 
         if (!isNaN(metValue) && !isNaN(weightValue) && !isNaN(exerciseDuration)) {
             var caloriesBurned = metValue * weightValue * exerciseDuration;
@@ -458,6 +459,9 @@ var body = document.getElementById("squatBody");
 function closepopup() {
     blur.classList.add("hidden");
     body.classList.remove("stop-scrolling");
+    numberOfMetS.value = null;
+    numberOfSquats.value = null;
+    burntCaloriesS.value = null;
 }
 
 function showPopUp(congratulationMessage) {
@@ -471,7 +475,6 @@ function showPopUp(congratulationMessage) {
 var btnOk = document.getElementsByClassName("btnok")[0];
 btnOk.addEventListener("click", closepopup);
 
-var i = 0;
 
 function funkcija(kalorije, prosjecnaTemperatura) {
     var currentTime = new Date();
@@ -485,14 +488,15 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     var formattedDate = `${day}.${month}.${year}`;
     var formattedTime = `${hours}:${minutes}:${seconds}`;
 
-    i += 1;
+    // Brojanje div elemenata
+    var brojSetova = document.querySelectorAll('.notificationsContainerSquat > div').length;
 
     var newTaskDiv = document.createElement("div");
     newTaskDiv.className = "notifikacija";
     newTaskDiv.innerHTML = `
     <div class="prvi">
         <p>Set</p>
-        <p>${i}</p>
+        <p>${brojSetova + 1}</p>
     </div>
     <div class="drugi">
         <p>Date and Time</p>
@@ -507,8 +511,8 @@ function funkcija(kalorije, prosjecnaTemperatura) {
         <p>${kalorije}</p >
     </div>
     <div class="peti">
-    <p>Average Temperature: </p>
-    <p>${prosjecnaTemperatura}°C</p>
+        <p>Average Temperature: </p>
+        <p>${prosjecnaTemperatura}°C</p>
     </div>
     <div class="ugasi">
         X
@@ -520,9 +524,6 @@ function funkcija(kalorije, prosjecnaTemperatura) {
 
     totalSquats += parseInt(squat.value);
     totalCalories += parseFloat(kalorije);
-
-    document.getElementById('totalSquats').innerText = totalSquats;
-    document.getElementById('totalCaloriesS').innerText = totalCalories.toFixed(2);
 
     squatData.push({
         date: new Date().toLocaleString(),
