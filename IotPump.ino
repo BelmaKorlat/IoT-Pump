@@ -8,7 +8,6 @@
 //Biblioteke za temp senzor
 #include <OneWire.h>
 #include <DallasTemperature.h>
-
 //Provide the token generation process info.
 #include "addons/TokenHelper.h"
 //Provide the RTDB payload printing info and other helper functions.
@@ -32,13 +31,10 @@ FirebaseConfig config;
 
 //za temp
 #define ONE_WIRE_BUS D3
-
 OneWire oneWire(ONE_WIRE_BUS);
-
 DallasTemperature sensors(&oneWire);
-
 float Celsius = 0;
-
+ 
 unsigned long sendDataPrevMillis = 0;
 int sklekovi = 0;
 int cucnjevi = 0;
@@ -58,15 +54,15 @@ const int PIN_LEDR1   = D0;
 const int PIN_LEDY1   = D5;
 const int PIN_LEDG1   = D4;
 int age = 0;
-float weight = 0;
-float height = 0;
+int weight = 0;
+int height = 0;
 const int maxNameLength = 50;
 const int maxNameLengthG = 2;
 char name[maxNameLength] = " ";
 char gender[maxNameLengthG]= " ";
 
 void setup(){
-   sensors.begin();
+  sensors.begin();
   
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin,INPUT);
@@ -76,6 +72,7 @@ void setup(){
   pinMode(PIN_LEDG1,OUTPUT);
 
   Serial.begin(115200);
+
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.print("Connecting to Wi-Fi");
   while (WiFi.status() != WL_CONNECTED){
@@ -104,7 +101,7 @@ void setup(){
 
   /* Assign the callback function for the long running token generation task */
   config.token_status_callback = tokenStatusCallback; //see addons/TokenHelper.h
-  
+
   Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 }
@@ -300,7 +297,7 @@ void loop(){
       Serial.println("REASON: " + fbdo.errorReason());
     }
 
-      if (Firebase.RTDB.setFloat(&fbdo, "data/squatFireB", countSquat)){
+    if (Firebase.RTDB.setFloat(&fbdo, "data/squatFireB", countSquat)){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
       Serial.println("TYPE: " + fbdo.dataType());
@@ -310,7 +307,7 @@ void loop(){
       Serial.println("REASON: " + fbdo.errorReason());
     }
 
-        if (Firebase.RTDB.setFloat(&fbdo, "data/Celsius", Celsius)){
+    if (Firebase.RTDB.setFloat(&fbdo, "data/Celsius", Celsius)){
       Serial.println("PASSED");
       Serial.println("PATH: " + fbdo.dataPath());
       Serial.println("TYPE: " + fbdo.dataType());
@@ -319,11 +316,40 @@ void loop(){
       Serial.println("FAILED");
       Serial.println("REASON: " + fbdo.errorReason());
     }
+
+    if (Firebase.RTDB.getInt(&fbdo, "/data/weight")) {
+      if (fbdo.dataType() == "int") {
+        weight = fbdo.intData();
+      }
+    }
+    if (Firebase.RTDB.getInt(&fbdo, "/data/height")) {
+      if (fbdo.dataType() == "int") {
+        height = fbdo.intData();
+      }
+    }
+    if (Firebase.RTDB.getInt(&fbdo, "/data/age")) {
+      if (fbdo.dataType() == "int") {
+        age = fbdo.intData();
+      }
+    }
+    if (Firebase.RTDB.getString(&fbdo, "/data/name")) {
+      if (fbdo.dataType() == "string") {
+        strncpy(name, fbdo.stringData().c_str(), maxNameLength - 1);
+        name[maxNameLength - 1] = '\0'; // Ensure null termination
+      }
+    }
+    if (Firebase.RTDB.getString(&fbdo, "/data/gender")) {
+      if (fbdo.dataType() == "string") {
+        strncpy(gender, fbdo.stringData().c_str(), maxNameLengthG - 1);
+        gender[maxNameLengthG - 1] = '\0'; // Ensure null termination
+      }
+    }
+
+    Firebase.RTDB.setInt(&fbdo, "data/weight", weight);
+    Firebase.RTDB.setInt(&fbdo, "data/height", height);
+    Firebase.RTDB.setInt(&fbdo, "data/age", age);
+    Firebase.RTDB.setString(&fbdo, "data/name", name);
+    Firebase.RTDB.setString(&fbdo, "data/gender", gender);
   }
-  Firebase.RTDB.setInt(&fbdo, "data/age", age);
-  Firebase.RTDB.setFloat(&fbdo, "data/weight", weight);
-  Firebase.RTDB.setFloat(&fbdo, "data/height", height);
-  Firebase.RTDB.setString(&fbdo, "data/name", name);
-  Firebase.RTDB.setString(&fbdo, "data/gender", gender);
-  
 }
+
