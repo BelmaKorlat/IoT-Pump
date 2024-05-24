@@ -89,15 +89,12 @@ function fetchAndSetName() {
 }
 
 function extractFirstName(fullName) {
-    // Pronaći indeks prvog razmaka
     const firstSpaceIndex = fullName.indexOf(' ');
 
-    // Ako nema razmaka, vratiti ceo unos kao ime
     if (firstSpaceIndex === -1) {
         return fullName;
     }
 
-    // Izdvojiti ime do prvog razmaka
     return fullName.substring(0, firstSpaceIndex);
 }
 
@@ -152,30 +149,24 @@ document.getElementById("showExercise").addEventListener("click", showExercise);
 document.getElementById("closeExercise").addEventListener("click", closeExercise);
 
 function showExercise() {
-    // Hide the element with the class "imgBtn"
     document.querySelector(".imgBtn").classList.add("hidden");
 
-    // Show the element with the class "videoBtn"
     let videoBtn = document.querySelector(".videoBtn");
     videoBtn.classList.remove("hidden");
 
-    // Show the video element within the videoBtn div
     let video = videoBtn.querySelector("video");
     video.classList.remove("hidden");
-    video.play();  // Start playing the video automatically if desired
+    video.play();
 }
 
 function closeExercise() {
-    // Hide the element with the class "videoBtn"
     let videoBtn = document.querySelector(".videoBtn");
     videoBtn.classList.add("hidden");
 
-    // Pause and hide the video element within the videoBtn div
     let video = videoBtn.querySelector("video");
     video.pause();
     video.classList.add("hidden");
 
-    // Show the element with the class "imgBtn"
     document.querySelector(".imgBtn").classList.remove("hidden");
 }
 
@@ -608,7 +599,7 @@ function createChart() {
     }
 
     // Postavi linear gradient background
-    const ctx = document.getElementById('myChartSquat').getContext('2d'); // Zamijenite 'yourCanvasId' sa ID-em vašeg canvas elementa
+    const ctx = document.getElementById('myChartSquat').getContext('2d');
     const gradientS = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
     gradientS.addColorStop(1, '#6c2c91');
     gradientS.addColorStop(0.6944, '#c41c78');

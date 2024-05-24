@@ -11,14 +11,12 @@ body {
     color: #F1F1F1;
 }
 
-/* Uklanja strelice iz input polja tipa number u Chrome, Safari, Edge i Opera */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Uklanja strelice iz input polja tipa number u Firefox-u */
 input[type="number"] {
     -moz-appearance: textfield;
 }
@@ -136,7 +134,7 @@ input[type="number"] {
     align-items: center;
 }
 
-.logo svg {
+.logo img {
     width: 200px;
 }
 
@@ -333,10 +331,10 @@ input[type="number"] {
     margin: 10px;
 }
 
-.BMIicon svg,
-.bodyFaticon svg,
-.bodyTypeicon svg,
-.idealWeighticon svg {
+.BMIicon img,
+.bodyFaticon img,
+.bodyTypeicon img,
+.idealWeighticon img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -514,8 +512,6 @@ canvas {
         font-size: 12px;
     }
 
-    /*Ovo provjeriti*/
-
     .popup {
         height: 200px;
         width: 250px;
@@ -536,7 +532,7 @@ canvas {
         width: 80%;
     }
 
-    .logo svg {
+    .logo img {
         width: 150px;
     }
 
@@ -687,10 +683,10 @@ canvas {
         width: 80%;
     }
 
-    .BMIicon svg,
-    .bodyFaticon svg,
-    .bodyTypeicon svg,
-    .idealWeighticon svg {
+    .BMIicon img,
+    .bodyFaticon img,
+    .bodyTypeicon img,
+    .idealWeighticon img {
         width: 80px;
         height: 80px;
     }
@@ -744,7 +740,7 @@ canvas {
         width: 80%;
     }
 
-    .logo svg {
+    .logo img {
         width: 100px;
     }
 
@@ -785,10 +781,10 @@ canvas {
         font-size: 15px;
     }
 
-    .BMIicon svg,
-    .bodyFaticon svg,
-    .bodyTypeicon svg,
-    .idealWeighticon svg {
+    .BMIicon img,
+    .bodyFaticon img,
+    .bodyTypeicon img,
+    .idealWeighticon img {
         width: 80px;
         height: 80px;
     }

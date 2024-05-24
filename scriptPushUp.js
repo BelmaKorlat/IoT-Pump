@@ -29,20 +29,18 @@ var cucnjevi = 0;
 var distanceValue = 0;
 var pushUpBody = document.getElementById("pushUpBody");
 pushUpBody.addEventListener("load", Load);
-// Dodani elementi za težinu, MET, vrijeme i potrošene kalorije
+// Elementi za težinu, MET, vrijeme i potrošene kalorije
 var numberOfWeight = document.getElementById("numberOfWeight");
 var numberOfMet = document.getElementById("numberOfMet");
 var burntCalories = document.getElementById("burntCalories");
 var startExerciseTime;
-// Postavljanje grafikona
+// Postavljanje grafa
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart;
 // Postavljanje početnih vrijednosti
 var totalPushUps = 0;
 var totalCalories = 0;
 var pushUpData = [];
-var isPaused = false;
-var originalPushUps = 0;
 
 //load funkcija
 function Load() {
@@ -74,7 +72,6 @@ function Load() {
     fetchAndSetName();
 }
 
-// Function to fetch name from Realtime Database and set it to the <h1> element
 function fetchAndSetName() {
     const userRef = ref(db, 'data/name');;
 
@@ -93,15 +90,12 @@ function fetchAndSetName() {
 }
 
 function extractFirstName(fullName) {
-    // Pronaći indeks prvog razmaka
     const firstSpaceIndex = fullName.indexOf(' ');
 
-    // Ako nema razmaka, vratiti ceo unos kao ime
     if (firstSpaceIndex === -1) {
         return fullName;
     }
 
-    // Izdvojiti ime do prvog razmaka
     return fullName.substring(0, firstSpaceIndex);
 }
 
@@ -158,30 +152,24 @@ document.getElementById("showExercise").addEventListener("click", showExercise);
 document.getElementById("closeExercise").addEventListener("click", closeExercise);
 
 function showExercise() {
-    // Hide the element with the class "imgBtn"
     document.querySelector(".imgBtn").classList.add("hidden");
 
-    // Show the element with the class "videoBtn"
     let videoBtn = document.querySelector(".videoBtn");
     videoBtn.classList.remove("hidden");
 
-    // Show the video element within the videoBtn div
     let video = videoBtn.querySelector("video");
     video.classList.remove("hidden");
-    video.play();  // Start playing the video automatically if desired
+    video.play();
 }
 
 function closeExercise() {
-    // Hide the element with the class "videoBtn"
     let videoBtn = document.querySelector(".videoBtn");
     videoBtn.classList.add("hidden");
 
-    // Pause and hide the video element within the videoBtn div
     let video = videoBtn.querySelector("video");
     video.pause();
     video.classList.add("hidden");
 
-    // Show the element with the class "imgBtn"
     document.querySelector(".imgBtn").classList.remove("hidden");
 }
 //Ispisivanje poruke uspjeha kada korisnik zavrsi set
@@ -216,7 +204,6 @@ function sendPersonalDetails() {
         age: parseInt(document.getElementById("age").value),
         height: parseFloat(document.getElementById("height").value)
     }).then(() => {
-        // Calling a function to read and display data after it's sent to Firebase
         readPersonalDetails();
         healthStatisticsFunction();
     }).catch((error) => {
@@ -591,21 +578,16 @@ document.addEventListener('DOMContentLoaded', function () {
 //za brisanje
 document.querySelector(".notificationsContainer").addEventListener("click", function (e) {
     if (e.target.classList.contains("ugasi")) {
-        // Dobivanje indeksa izbrisane notifikacije
         var index = Array.from(document.querySelector(".notificationsContainer").children).indexOf(e.target.parentElement);
 
-        // Uklanjanje notifikacije iz HTML-a
         e.target.parentElement.remove();
 
-        // Ažuriranje pushUpData, totalPushUps, totalCalories i lokalnog pohranjivanja
         if (index !== -1 && index <= pushUpData.length) {
 
-            // Provjeri je li svojstvo pushUps definirano prije pristupanja
             if (pushUpData[index].hasOwnProperty('pushUps')) {
                 totalPushUps -= parseInt(pushUpData[index].pushUps);
             }
 
-            // Provjeri je li svojstvo calories definirano prije pristupanja
             if (pushUpData[index].hasOwnProperty('calories')) {
                 totalCalories -= parseFloat(pushUpData[index].calories);
             }
@@ -623,13 +605,11 @@ document.querySelector(".notificationsContainer").addEventListener("click", func
 });
 
 function createChart() {
-    // Uništi postojeći grafikon ako postoji
     if (myChart) {
         myChart.destroy();
     }
 
-    // Postavi linear gradient background
-    const ctx = document.getElementById('myChart').getContext('2d'); // Zamijenite 'yourCanvasId' sa ID-em vašeg canvas elementa
+    const ctx = document.getElementById('myChart').getContext('2d');
     const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
     gradient.addColorStop(1, '#6c2c91');
     gradient.addColorStop(0.6944, '#c41c78');
