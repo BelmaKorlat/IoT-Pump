@@ -67,33 +67,39 @@ function Load() {
     controlExercise();
     checkExercise();
     readTemperature();
+    fetchAndSetName();
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const banner = document.querySelector('.banner');
-    const notificationContainer = document.querySelector('#taskoviSquat');
+// Function to fetch name from Realtime Database and set it to the <h1> element
+function fetchAndSetName() {
+    const userRef = ref(db, 'data/name');;
 
+    get(userRef)
+        .then((snapshot) => {
+            const userName = snapshot.val();
+            if (userName) {
+                document.getElementById('userName').textContent = `${extractFirstName(userName)}, TIME FOR SQUATS`;
+            } else {
+                console.log("No name found!");
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting data:", error);
+        });
+}
 
-    const bannerHeight = banner.offsetHeight;
-    const initialPosition = banner.offsetTop;
+function extractFirstName(fullName) {
+    // Pronaći indeks prvog razmaka
+    const firstSpaceIndex = fullName.indexOf(' ');
 
-    window.addEventListener('scroll', () => {
-        const containerTop = notificationContainer.getBoundingClientRect().top;
+    // Ako nema razmaka, vratiti ceo unos kao ime
+    if (firstSpaceIndex === -1) {
+        return fullName;
+    }
 
-        if (containerTop <= bannerHeight) {
-            banner.style.position = 'absolute';
-            banner.style.top = containerTop + 'px';
-        } else {
-            banner.style.position = 'fixed';
-            banner.style.top = '35px';
-        }
-
-        if (window.pageYOffset <= initialPosition) {
-            banner.style.position = 'absolute';
-            banner.style.top = initialPosition + 'px';
-        }
-    });
-});
+    // Izdvojiti ime do prvog razmaka
+    return fullName.substring(0, firstSpaceIndex);
+}
 
 //Dobavljanje temperature
 function readTemperature() {
@@ -133,40 +139,65 @@ function controlExercise() {
 }
 
 function updateSquatImage(distance) {
-    if (distance <= 30) {
-        imgDole.classList.remove("hidden");
-        imgPokret.classList.add("hidden");
-        imgGore.classList.add("hidden");
-    } else if (distance > 30 && distance < 40) {
-        imgDole.classList.add("hidden");
-        imgPokret.classList.remove("hidden");
-        imgGore.classList.add("hidden");
-    } else {
-        imgDole.classList.add("hidden");
-        imgPokret.classList.add("hidden");
-        imgGore.classList.remove("hidden");
+    if (distance < 10) {
+        squat1.classList.remove("hidden");
+        squat2.classList.add("hidden");
+    } else if (distance > 10) {
+        squat1.classList.add("hidden");
+        squat2.classList.remove("hidden");
     }
+}
+
+document.getElementById("showExercise").addEventListener("click", showExercise);
+document.getElementById("closeExercise").addEventListener("click", closeExercise);
+
+function showExercise() {
+    // Hide the element with the class "imgBtn"
+    document.querySelector(".imgBtn").classList.add("hidden");
+
+    // Show the element with the class "videoBtn"
+    let videoBtn = document.querySelector(".videoBtn");
+    videoBtn.classList.remove("hidden");
+
+    // Show the video element within the videoBtn div
+    let video = videoBtn.querySelector("video");
+    video.classList.remove("hidden");
+    video.play();  // Start playing the video automatically if desired
+}
+
+function closeExercise() {
+    // Hide the element with the class "videoBtn"
+    let videoBtn = document.querySelector(".videoBtn");
+    videoBtn.classList.add("hidden");
+
+    // Pause and hide the video element within the videoBtn div
+    let video = videoBtn.querySelector("video");
+    video.pause();
+    video.classList.add("hidden");
+
+    // Show the element with the class "imgBtn"
+    document.querySelector(".imgBtn").classList.remove("hidden");
 }
 
 const congratulationMessages = [
     "Congratulations! You've nailed it!",
     "Awesome job! Keep up the good work!",
     "Fantastic! You're doing great!",
-    "Way to go! You're a push-up pro!",
+    "Way to go! You're a squat pro!",
     "Outstanding! You crushed that set!",
-    "Incredible work! Your push-up game is strong!",
+    "Incredible work! Your squat game is strong!",
     "Amazing job! You're making progress!",
     "Fantastic effort! You're pushing boundaries!",
-    "Bravo! You've conquered the push-ups!",
+    "Bravo! You've conquered the squats!",
     "Impressive! Keep up the excellent work!",
-    "Superb! You're a push-up superstar!",
-    "Well done! You nailed those push-ups!",
+    "Superb! You're a squat superstar!",
+    "Well done! You nailed those squats!",
     "Terrific job! Your strength is shining!",
-    "Excellent! You're on fire with those push-ups!",
+    "Excellent! You're on fire with those squats!",
     "Great work! Your dedication is paying off!",
-    "Kudos to you! You're a push-up champion!",
+    "Kudos to you! You're a squat champion!",
     "Outstanding performance! You're unstoppable!",
-    "Brilliant! You've mastered the art of push-ups!",
+    "Brilliant! You've mastered the art of squats!",
     "Spectacular! Your fitness journey is thriving!"
 ];
 
@@ -251,6 +282,7 @@ function clearPersonalDetails() {
     var LosingWeight = document.getElementById("LosingWeight");
     var maintainWeight = document.getElementById("maintainWeight");
     var gainWeight = document.getElementById("gainWeight");
+    document.getElementById('userName').textContent = `TIME FOR SQUATS`
 
     BMISpan.textContent = "";
     BMItxt.textContent = "";
@@ -495,23 +527,18 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     newTaskDiv.className = "notifikacija";
     newTaskDiv.innerHTML = `
     <div class="prvi">
-        <p>Set</p>
         <p>${brojSetova + 1}</p>
     </div>
     <div class="drugi">
-        <p>Date and Time</p>
         <p>${formattedDate} / ${formattedTime}</p>
     </div>
     <div class="treci">
-        <p>No. Squats</p>
         <p>${squat.value}</p >
     </div>
     <div class="cetvrti">
-        <p>No. Calories</p>
         <p>${kalorije}</p >
     </div>
     <div class="peti">
-        <p>Average Temperature: </p>
         <p>${prosjecnaTemperatura}°C</p>
     </div>
     <div class="ugasi">
@@ -580,6 +607,18 @@ function createChart() {
         myChart.destroy();
     }
 
+    // Postavi linear gradient background
+    const ctx = document.getElementById('myChartSquat').getContext('2d'); // Zamijenite 'yourCanvasId' sa ID-em vašeg canvas elementa
+    const gradientS = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
+    gradientS.addColorStop(1, '#6c2c91');
+    gradientS.addColorStop(0.6944, '#c41c78');
+    gradientS.addColorStop(0, '#6c1c46');
+
+    const gradientCaloriesS = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
+    gradientCaloriesS.addColorStop(1, '#D0008E');
+    gradientCaloriesS.addColorStop(0.6944, '#FF9300');
+    gradientCaloriesS.addColorStop(0, '#FAFF95');
+
     myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -587,15 +626,11 @@ function createChart() {
             datasets: [{
                 label: 'Number of Squats',
                 data: squatData.map(entry => entry.squats),
-                backgroundColor: '#52057B',
-                borderColor: '#D9CAB3',
-                borderWidth: 1
+                backgroundColor: gradientS
             }, {
                 label: 'Calories Burned',
                 data: squatData.map(entry => entry.calories),
-                backgroundColor: '#BC6FF1',
-                borderColor: '#6D9886',
-                borderWidth: 1
+                backgroundColor: gradientCaloriesS
             }]
         }
     });
@@ -614,6 +649,7 @@ function drawChart() {
 
     createChart();
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     showTask();

@@ -41,6 +41,8 @@ var myChart;
 var totalPushUps = 0;
 var totalCalories = 0;
 var pushUpData = [];
+var isPaused = false;
+var originalPushUps = 0;
 
 //load funkcija
 function Load() {
@@ -69,33 +71,40 @@ function Load() {
     controlExercise();
     checkExercise();
     readTemperature();
+    fetchAndSetName();
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    const banner = document.querySelector('.banner');
-    const notificationContainer = document.querySelector('#taskovi');
+// Function to fetch name from Realtime Database and set it to the <h1> element
+function fetchAndSetName() {
+    const userRef = ref(db, 'data/name');;
 
+    get(userRef)
+        .then((snapshot) => {
+            const userName = snapshot.val();
+            if (userName) {
+                document.getElementById('userName').textContent = `${extractFirstName(userName)}, TIME FOR PUSH-UPS`;
+            } else {
+                console.log("No name found!");
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting data:", error);
+        });
+}
 
-    const bannerHeight = banner.offsetHeight;
-    const initialPosition = banner.offsetTop;
+function extractFirstName(fullName) {
+    // Pronaći indeks prvog razmaka
+    const firstSpaceIndex = fullName.indexOf(' ');
 
-    window.addEventListener('scroll', () => {
-        const containerTop = notificationContainer.getBoundingClientRect().top;
+    // Ako nema razmaka, vratiti ceo unos kao ime
+    if (firstSpaceIndex === -1) {
+        return fullName;
+    }
 
-        if (containerTop <= bannerHeight) {
-            banner.style.position = 'absolute';
-            banner.style.top = containerTop + 'px';
-        } else {
-            banner.style.position = 'fixed';
-            banner.style.top = '35px';
-        }
+    // Izdvojiti ime do prvog razmaka
+    return fullName.substring(0, firstSpaceIndex);
+}
 
-        if (window.pageYOffset <= initialPosition) {
-            banner.style.position = 'absolute';
-            banner.style.top = initialPosition + 'px';
-        }
-    });
-});
 
 //Dobavljanje temperature
 function readTemperature() {
@@ -136,18 +145,45 @@ function controlExercise() {
 
 //Mijenjanje slika na osnovu distance
 function updatePushUpImage(distance) {
-    var genderInput = document.getElementById("gender");
-    var spol = genderInput.value.toUpperCase();
-    if (spol === 'M') {
-        imgDole.classList.remove("hidden");
-        imgPokret.classList.add("hidden");
-
-    } else if (spol === 'F') {
-        imgDole.classList.add("hidden");
-        imgPokret.classList.remove("hidden");
+    if (distance < 10) {
+        pushUp1.classList.remove("hidden");
+        pushUp2.classList.add("hidden");
+    } else if (distance > 10) {
+        pushUp1.classList.add("hidden");
+        pushUp2.classList.remove("hidden");
     }
 }
 
+document.getElementById("showExercise").addEventListener("click", showExercise);
+document.getElementById("closeExercise").addEventListener("click", closeExercise);
+
+function showExercise() {
+    // Hide the element with the class "imgBtn"
+    document.querySelector(".imgBtn").classList.add("hidden");
+
+    // Show the element with the class "videoBtn"
+    let videoBtn = document.querySelector(".videoBtn");
+    videoBtn.classList.remove("hidden");
+
+    // Show the video element within the videoBtn div
+    let video = videoBtn.querySelector("video");
+    video.classList.remove("hidden");
+    video.play();  // Start playing the video automatically if desired
+}
+
+function closeExercise() {
+    // Hide the element with the class "videoBtn"
+    let videoBtn = document.querySelector(".videoBtn");
+    videoBtn.classList.add("hidden");
+
+    // Pause and hide the video element within the videoBtn div
+    let video = videoBtn.querySelector("video");
+    video.pause();
+    video.classList.add("hidden");
+
+    // Show the element with the class "imgBtn"
+    document.querySelector(".imgBtn").classList.remove("hidden");
+}
 //Ispisivanje poruke uspjeha kada korisnik zavrsi set
 const congratulationMessages = [
     "Congratulations! You've nailed it!",
@@ -252,6 +288,7 @@ function clearPersonalDetails() {
     var LosingWeight = document.getElementById("LosingWeight");
     var maintainWeight = document.getElementById("maintainWeight");
     var gainWeight = document.getElementById("gainWeight");
+    document.getElementById('userName').textContent = `TIME FOR PUSH-UPS`
 
     BMISpan.textContent = "";
     BMItxt.textContent = "";
@@ -500,23 +537,18 @@ function funkcija(kalorije, prosjecnaTemperatura) {
     newTaskDiv.className = "notifikacija";
     newTaskDiv.innerHTML = `
     <div class="prvi">
-        <p>Set</p>
         <p>${brojSetova + 1}</p>
     </div>
     <div class="drugi">
-        <p>Date and Time</p>
         <p>${formattedDate} / ${formattedTime}</p>
     </div>
     <div class="treci">
-        <p>No. Push-ups</p>
         <p>${pushUp.value}</p >
     </div>
     <div class="cetvrti">
-        <p>No. Calories</p>
         <p>${kalorije}</p >
     </div>
     <div class="peti">
-        <p>Average Temperature </p>
         <p>${prosjecnaTemperatura}°C</p>
     </div>
     <div class="ugasi">
@@ -596,6 +628,17 @@ function createChart() {
         myChart.destroy();
     }
 
+    // Postavi linear gradient background
+    const ctx = document.getElementById('myChart').getContext('2d'); // Zamijenite 'yourCanvasId' sa ID-em vašeg canvas elementa
+    const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
+    gradient.addColorStop(1, '#6c2c91');
+    gradient.addColorStop(0.6944, '#c41c78');
+    gradient.addColorStop(0, '#6c1c46');
+
+    const gradientCalories = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height * 4);
+    gradientCalories.addColorStop(1, '#D0008E');
+    gradientCalories.addColorStop(0.6944, '#FF9300');
+    gradientCalories.addColorStop(0, '#FAFF95');
     // Kreiranje grafa
     myChart = new Chart(ctx, {
         type: 'bar',
@@ -604,15 +647,11 @@ function createChart() {
             datasets: [{
                 label: 'Number of Push-ups',
                 data: pushUpData.map(entry => entry.pushUps),
-                backgroundColor: '#52057B',
-                borderColor: '#D9CAB3',
-                borderWidth: 1
+                backgroundColor: gradient
             }, {
                 label: 'Calories Burned',
                 data: pushUpData.map(entry => entry.calories),
-                backgroundColor: '#BC6FF1',
-                borderColor: '#6D9886',
-                borderWidth: 1
+                backgroundColor: gradientCalories
             }]
         }
     });

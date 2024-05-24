@@ -1,7 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
 * {
-    font-family: 'Ubuntu';
+    font-family: 'Nunito Sans';
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -13,14 +11,30 @@ body {
     color: #F1F1F1;
 }
 
+/* Uklanja strelice iz input polja tipa number u Chrome, Safari, Edge i Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Uklanja strelice iz input polja tipa number u Firefox-u */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 .title {
-    background-image: linear-gradient(to right, #BC6FF1, #52057B);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 2.5em;
-    font-weight: bold;
-    letter-spacing: 2px;
-    padding: 10px;
+    font-size: 30px;
+    font-weight: 900;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: linear-gradient(to right, #6C2C91 0%, #C41C78 69.44%, #6C1C46 100%);
 }
 
 ::-webkit-scrollbar {
@@ -29,66 +43,9 @@ body {
 
 .temperature {
     position: absolute;
-    top: 20%;
-    right: 10%;
-    font-size: 1.2rem;
-}
-
-.left-sidebar {
-    position: absolute;
-    top: 20%;
-    left: 5%;
-}
-
-.banner {
-    position: relative;
-    width: 200px;
-    height: 600px;
-    background-color: #52057B;
-    background-image: linear-gradient(45deg, #52057B, #892CDC, #BC6FF1);
-    overflow: hidden;
-    border-radius: 10px;
-}
-
-.banner-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: transparent;
-    text-align: center;
-    z-index: 1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.banner-content h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    -webkit-text-stroke: 1px white;
-    -webkit-text-fill-color: #fff;
-    font-family: 'Lobster', cursive;
-}
-
-.banner-decoration {
-    position: absolute;
-    bottom: -50%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150%;
-    height: 100%;
-    background-color: #52057B;
-    clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
-    animation: swing 3s infinite alternate;
-}
-
-@keyframes swing {
-    0% {
-        transform: translateX(-50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translateX(-50%) rotate(10deg);
-    }
+    top: 5%;
+    right: 1%;
+    font-size: 15px;
 }
 
 .blur {
@@ -103,7 +60,7 @@ body {
 }
 
 .checkmark {
-    color: #BC6FF1;
+    color: white;
     height: 45px;
     width: 45px;
     margin-bottom: 25px;
@@ -121,14 +78,14 @@ body {
 }
 
 .popuptext {
-    color: #BC6FF1;
+    color: white;
     text-align: center;
     width: 80%;
 }
 
 .btnok {
     color: black;
-    background-color: #BC6FF1;
+    background-color: white;
     padding: 7px;
     border-radius: 5px;
     width: 60px;
@@ -139,7 +96,6 @@ body {
 }
 
 .btnok:hover {
-    color: #F1F1F1;
     cursor: pointer;
 }
 
@@ -159,16 +115,59 @@ body {
     align-items: center;
 }
 
-.imagePushUp,
-.imageSquat {
-    margin-top: 20px;
-    margin-bottom: 20px;
+#userName {
+    text-transform: uppercase;
 }
 
-img {
+.logoVideo {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.logo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo svg {
+    width: 200px;
+}
+
+.myVideo {
+    border-width: 5px;
+    border-style: solid;
+    border-image: linear-gradient(90deg,
+            #6c2c91 0%,
+            #c41c78 69.44%,
+            #6c1c46 100%);
+    border-image-slice: 1;
+}
+
+.imgBtn img {
     width: 500px;
-    height: 300px;
-    border-radius: 10px;
+}
+
+.videoBtn,
+.imgBtn {
+    display: flex;
+    flex-direction: column;
+}
+
+.videoBtn button,
+.imgBtn button {
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(to right, #6C2C91 0%, #C41C78 69.44%, #6C1C46 100%);
 }
 
 .hidden {
@@ -176,55 +175,99 @@ img {
 }
 
 .personalDetails {
-    width: 40%;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid #52057B;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0;
+    margin-bottom: 50px;
 }
 
 .titleEnterDetails {
     text-align: center;
     letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 25px;
+    margin: 0;
 }
 
 .contentDetails {
     display: flex;
-    justify-content: space-evenly;
+    text-align: center;
+    margin: 0;
+}
+
+.contentDetailsS {
+    display: flex;
+    text-align: center;
+    margin: 0;
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .left,
-.middle,
 .right {
-    flex-basis: 30%;
+    flex-basis: 50%;
 }
 
-.middle {
-    height: fit-content;
-    margin-top: auto;
-    margin-bottom: auto;
+.left {
+    margin-bottom: 10px;
 }
 
-.personalDetails input {
-    border: none;
-    width: 90%;
+.right {
+    flex-basis: 35%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.linija {
+    height: 2px;
+    background: linear-gradient(90deg,
+            #6c2c91 0%,
+            #c41c78 69.44%,
+            #6c1c46 100%);
+    margin-top: 2px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.leftInput,
+.rightInput {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(90deg,
+            #6c2c91 0%,
+            #c41c78 69.44%,
+            #6c1c46 100%);
+    border-image-slice: 1;
+    width: 60%;
     padding: 5px;
-    border-radius: 5px;
-    background-color: #52057B;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+}
+
+.rightInput {
+    width: 100%;
+}
+
+.leftInput input,
+.rightInput input {
+    background-color: transparent;
+    border: none;
+    width: 100%;
     color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.2s;
+    outline: none;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-.personalDetails input:focus {
-    background-color: #892CDC;
-    transform: scale(1.05);
-}
-
-.personalDetails label {
-    font-size: 1.2rem;
+.left p,
+.right p {
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .buttonPersDetails {
@@ -237,64 +280,65 @@ img {
 #saveButtonS,
 #deleteButtonS {
     border: none;
-    padding: 8px 10px;
-    border-radius: 5px;
-    background-color: #52057B;
+    padding: 10px 80px;
     color: white;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.2s, box-shadow 0.3s;
+    font-size: 23px;
+    text-transform: uppercase;
+    font-weight: 600;
     cursor: pointer;
-    width: 35%;
-    margin-top: 20px;
-    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    margin-top: 40px;
+    background: linear-gradient(to right, #6C2C91 0%, #C41C78 69.44%, #6C1C46 100%);
 }
 
-#saveButton:hover {
-    background-color: #892CDC;
-    transform: translateY(-2px);
-    box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.2);
+#saveButton,
+#saveButtonS {
+    width: 55%;
 }
 
-#deleteButton:hover {
-    background-color: red;
-    transform: translateY(-2px);
-    box-shadow: 0px 8px 16px rgba(255, 255, 255, 0.2);
+#deleteButton,
+#deleteButtonS {
+    width: 42%;
 }
 
 .healthStatistics {
-    width: 40%;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid #52057B;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0;
+    margin-bottom: 50px;
+}
+
+.contentHealthStatistics {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .healthStatisticsDiv {
     display: flex;
-    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
 
 .BMI,
 .bodyFat,
 .bodyType,
 .idealWeight {
-    border-left: 4px solid #BC6FF1;
-    border-radius: 2px;
     padding: 20px;
     display: flex;
     width: 45%;
     margin: 10px;
-    box-shadow: 0 8px 16px rgba(173, 164, 164, 0.2);
 }
 
-.BMIicon img,
-.bodyFaticon img,
-.bodyTypeicon img,
-.idealWeighticon img {
-    width: 50px;
-    height: 50px;
+.BMIicon svg,
+.bodyFaticon svg,
+.bodyTypeicon svg,
+.idealWeighticon svg {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin-right: 20px;
 }
@@ -304,49 +348,61 @@ img {
 .bodyTypeValues p,
 .idealWeightValues p {
     margin: 0;
+    font-weight: 800;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.BMIvalues span,
+.bodyFatvalues span,
+.idealWeightValues span,
+.bodyTypeValues span {
+    font-size: 17px;
+    font-weight: 600;
 }
 
 .labelInput {
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 50px;
+}
+
+.readyToDoPushUpsLeft,
+.readyToDoPushUpsRight {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 40%;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid #52057B;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.readyToDoPushUpsRight {
     margin-top: 20px;
 }
 
-.labelInput input {
-    border: none;
-    width: 90%;
+.leftPushUps {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leftPushUps p {
+    margin: 0;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
     padding: 5px;
-    border-radius: 5px;
-    background-color: #52057B;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.2s;
 }
 
-.labelInput input:focus {
-    background-color: #892CDC;
-    transform: scale(1.05);
+#metP {
+    font-weight: 100;
+    font-size: 18px;
 }
 
-.labelInput input[readonly] {
-    pointer-events: none;
-    background-color: #52057B;
+.acitivities {
+    width: 80%;
 }
-
-
-.labelInput label {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
 
 .notificationsContainer,
 .notificationsContainerSquat {
@@ -358,6 +414,38 @@ img {
     margin-bottom: 50px;
 }
 
+.red {
+    width: 80%;
+    display: flex;
+}
+
+.prvii,
+.drugii,
+.trecii,
+.cetvrtii,
+.petii {
+    display: flex;
+    width: 25%;
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(90deg,
+            #6c2c91 0%,
+            #c41c78 69.44%,
+            #6c1c46 100%);
+    border-image-slice: 1;
+}
+
+.prvii p,
+.drugii p,
+.trecii p,
+.cetvrtii p,
+.petii p {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .prvi,
 .drugi,
 .treci,
@@ -366,10 +454,18 @@ img {
 .ugasi {
     display: flex;
     flex-direction: column;
-    color: #BC6FF1;
+    flex-basis: 30%;
     text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 22px;
+    font-weight: 700;
+    border-width: 1px;
+    border-style: solid;
+    border-image: linear-gradient(90deg,
+            #6c2c91 0%,
+            #c41c78 69.44%,
+            #6c1c46 100%);
+    border-image-slice: 1;
+
 }
 
 .notifikacija {
@@ -377,31 +473,18 @@ img {
     justify-content: space-between;
     height: 100px;
     width: 80%;
-    background-color: #101010;
-    padding: 10px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    border-bottom: dashed;
-    border-color: #52057B;
 }
 
 .ugasi {
     position: absolute;
     right: -40px;
     top: 40%;
-    width: 25px;
+    width: 30px;
     text-align: center;
-    border: 2px solid #BC6FF1;
     cursor: pointer;
-    background-color: #101010;
-    color: #BC6FF1;
-    border-radius: 5px;
-}
-
-#totalPushUps,
-#totalCalories {
-    font-size: 1.2rem;
 }
 
 canvas {
@@ -413,124 +496,369 @@ canvas {
     margin: 0 auto;
 }
 
-
-@media screen and (max-width: 1024px) {
+@media only screen and (max-width: 1200px) {
     .title {
-        text-align: center;
+        font-size: 24px;
     }
 
-    .container {
-        max-width: 100%;
-        overflow-x: hidden;
+    .titleEnterDetails {
+        font-size: 28px;
     }
 
-    .left-sidebar {
-        display: none;
+    .temperature {
+        font-size: 12px;
+        top: 4%;
     }
 
-    .banner {
+    .temperature span {
+        font-size: 12px;
+    }
+
+    /*Ovo provjeriti*/
+
+    .popup {
+        height: 200px;
+        width: 250px;
+    }
+
+    .btnok {
+        width: 50px;
+    }
+
+    .logoVideo {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+        width: 80%;
+    }
+
+    .logo svg {
+        width: 150px;
+    }
+
+    .contentHealthStatistics {
+        width: 80%;
+    }
+
+    .healthStatisticsDiv {
         width: 100%;
-        height: auto;
     }
 
-    .banner-content {
-        font-size: 1.5em;
+    .labelInput {
+        width: 100%;
     }
 
-    .banner-decoration {
-        display: none;
+    .readyToDoPushUpsLeft,
+    .readyToDoPushUpsRight {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .leftPushUps {
+        width: 80%;
+    }
+
+
+    .acitivities {
+        width: 100%;
+    }
+
+    .notificationsContainer,
+    .notificationsContainerSquat {
+        width: 100%;
+    }
+
+    .red {
+        width: 90%;
+    }
+
+    .prvii,
+    .drugii,
+    .trecii,
+    .cetvrtii,
+    .petii {
+        width: 20%;
+    }
+
+    .prvii p,
+    .drugii p,
+    .trecii p,
+    .cetvrtii p,
+    .petii p {
+        font-size: 15px;
+    }
+
+    .prvi,
+    .drugi,
+    .treci,
+    .cetvrti,
+    .peti,
+    .ugasi {
+        font-size: 15px;
+
+    }
+
+    .notifikacija {
+        height: 60px;
+        width: 90%;
+    }
+
+    .ugasi {
+        position: absolute;
+        right: -20px;
+        top: 30%;
+        width: 20px;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .title {
+        font-size: 15px;
+    }
+
+    .titleEnterDetails {
+        font-size: 20px;
+    }
+
+    .contentDetails {
+        flex-direction: column;
+    }
+
+    .contentDetailsS {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .right {
+        width: 100%;
+    }
+
+    .leftInput,
+    .rightInput {
+        width: 60%;
+    }
+
+    .leftInput input,
+    .rightInput input {
+        font-size: 18px;
+    }
+
+    .left p,
+    .right p {
+        font-size: 18px;
     }
 
     .buttonPersDetails {
         flex-direction: column;
         align-items: center;
+        margin-top: 40px;
     }
 
     #saveButton,
-    #deleteButton {
-        width: 35%;
-        margin-bottom: 10px;
+    #deleteButton,
+    #saveButtonS,
+    #deleteButtonS {
+        width: 80%;
+        padding: 10px 40px;
+        font-size: 18px;
     }
 
-    .personalDetails,
-    .healthStatistics,
-    .labelInput {
-        width: 90%;
+    .contentHealthStatistics {
+        width: 80%;
     }
 
-    img {
+    .healthStatisticsDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
-        display: block;
-        margin: 0 auto;
     }
 
     .BMI,
     .bodyFat,
     .bodyType,
     .idealWeight {
-        width: 90%;
+        width: 80%;
     }
 
-    .labelInput input,
-    .labelInput label {
-        width: 90%;
-        text-align: center;
+    .BMIicon svg,
+    .bodyFaticon svg,
+    .bodyTypeicon svg,
+    .idealWeighticon svg {
+        width: 80px;
+        height: 80px;
     }
 
-    .ugasi {
-        right: 10px;
-        left: initial;
-        width: auto;
-        top: initial;
-        top: 50%;
-        transform: translateX(0);
+    .BMIvalues p,
+    .bodyFatvalues p,
+    .bodyTypeValues p,
+    .idealWeightValues p {
+        font-size: 18px;
+    }
+
+    .BMIvalues span,
+    .bodyFatvalues span,
+    .bodyTypeValues span,
+    .idealWeightValues span {
+        font-size: 15px;
+    }
+
+    .leftPushUps p {
+        font-size: 20px;
+    }
+
+    #metP {
+        font-size: 15px;
+    }
+
+    .leftPushUps input {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .title {
+        font-size: 12px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .temperature {
+        font-size: 10px;
+        top: 2%;
+    }
+
+
+    .temperature span {
+        font-size: 10px;
+    }
+
+    .logoVideo {
+        width: 80%;
+    }
+
+    .logo svg {
+        width: 100px;
+    }
+
+    .imgBtn img,
+    .videoBtn video {
+        width: 300px;
+    }
+
+    .titleEnterDetails {
+        font-size: 20px;
+    }
+
+    .leftInput,
+    .rightInput {
+        width: 80%;
+    }
+
+    .leftInput input,
+    .rightInput input {
+        font-size: 15px;
+    }
+
+    .left p,
+    .right p {
+        font-size: 15px;
+    }
+
+    .buttonPersDetails {
+        margin-top: 20px;
+    }
+
+    #saveButton,
+    #deleteButton,
+    #saveButtonS,
+    #deleteButtonS {
+        width: 95%;
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+
+    .BMIicon svg,
+    .bodyFaticon svg,
+    .bodyTypeicon svg,
+    .idealWeighticon svg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .BMIvalues p,
+    .bodyFatvalues p,
+    .bodyTypeValues p,
+    .idealWeightValues p {
+        font-size: 18px;
+    }
+
+    .BMIvalues span,
+    .bodyFatvalues span,
+    .bodyTypeValues span,
+    .idealWeightValues span {
+        font-size: 15px;
+    }
+
+    .leftPushUps p {
+        font-size: 18px;
+    }
+
+    #metP {
+        font-size: 15px;
+    }
+
+    .leftPushUps input {
+        font-size: 15px;
     }
 
     .notificationsContainer,
     .notificationsContainerSquat {
-        height: auto;
-        overflow-y: visible;
-    }
-
-}
-
-@media screen and (max-width: 768px) {
-
-    .temperature {
-        display: none;
-    }
-
-    .contentDetails {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .left,
-    .middle,
-    .right {
-        flex-basis: 100%;
-        margin-bottom: 20px;
-        width: 90%;
-        text-align: center;
-    }
-
-    #saveButton,
-    #deleteButton {
         width: 90%;
     }
 
-    .healthStatisticsDiv {
-        flex-direction: column;
-        align-items: center;
+    .red {
+        width: 90%;
+    }
+
+    .prvii p,
+    .drugii p,
+    .trecii p,
+    .cetvrtii p,
+    .petii p {
+        font-size: 8px;
+    }
+
+    .prvi,
+    .drugi,
+    .treci,
+    .cetvrti,
+    .peti,
+    .ugasi {
+        font-size: 8px;
     }
 
     .notifikacija {
-        flex-direction: column;
-        height: auto;
-        width: 90%;
+        height: 50px;
+        width: 100%;
     }
 
-    #myChart {
-        scale: 0.4;
+    .ugasi {
+        right: -18px;
+        top: 20%;
+        width: 15px;
+    }
+
+    .healthStatisticsDiv {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
     }
 }

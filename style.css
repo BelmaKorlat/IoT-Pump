@@ -1,5 +1,5 @@
 * {
-    font-family: 'Ubuntu';
+    font-family: 'Nunito Sans';
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
@@ -10,108 +10,44 @@ body {
     background-color: #080808;
     color: #F1F1F1;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.left-sidebar {
-    position: absolute;
-    top: 20%;
-    left: 5%;
-}
-
-.banner {
-    position: relative;
+.logo {
     width: 200px;
-    height: 600px;
-    background-color: #52057B;
-    /* Početna boja je #52057B */
-    background-image: linear-gradient(45deg, #52057B, #892CDC, #BC6FF1);
-    /* Gradient boja */
-    overflow: hidden;
-    border-radius: 10px;
+    height: 200px;
 }
-
-.banner-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: transparent;
-    /* Tekst boje postavljen na transparentno */
-    text-align: center;
-    z-index: 1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    /* Sjena ispod teksta */
-}
-
-.banner-content h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    -webkit-text-stroke: 1px white;
-    /* 3D efekat za slova */
-    -webkit-text-fill-color: #fff;
-    /* Boja teksta */
-    font-family: 'Lobster', cursive;
-}
-
-.banner-decoration {
-    position: absolute;
-    bottom: -50%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150%;
-    height: 100%;
-    background-color: #52057B;
-    /* Početna boja je #1abc9c */
-    clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
-    animation: swing 3s infinite alternate;
-}
-
-@keyframes swing {
-    0% {
-        transform: translateX(-50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translateX(-50%) rotate(10deg);
-    }
-}
-
 
 #startScreen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 98vh;
+    height: 100vh;
 }
 
 .btnStartScreen {
     width: 50%;
     display: flex;
     justify-content: space-evenly;
-    margin-top: 20px;
 }
 
 button {
-    background-color: #52057B;
-    color: #c8a4e0;
-    padding: 10px 25px;
-    cursor: pointer;
     border: none;
-    border-radius: 5px;
-    letter-spacing: 2px;
-    box-shadow: 0 5px 11px #BC6FF1;
-    font-size: 1.2rem;
-    transition-duration: 0.4s;
-    font-weight: bold;
+    padding: 10px 80px;
+    color: white;
+    font-size: 20px;
     text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 40px;
+    background: linear-gradient(to right, #6C2C91 0%, #C41C78 69.44%, #6C1C46 100%);
 }
 
 button:hover {
-    background-color: #212121;
-    color: #BC6FF1;
+    color: white;
     transform: scale(1);
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
@@ -120,10 +56,8 @@ button::before {
     position: absolute;
     width: 100%;
     height: 1px;
-    /* Debljina crte */
-    background-color: #BC6FF1;
+    background-color: white;
     bottom: -2px;
-    /* Razmak od dna buttona */
     left: 0;
     transform: scaleX(0);
     transition: transform 0.5s ease;
@@ -134,28 +68,85 @@ button:hover::before {
 }
 
 h1 {
-    background-image: linear-gradient(to right, #BC6FF1, #52057B);
+    background-image: linear-gradient(to right, #6C2C91 0%, #C41C78 69.44%, #6C1C46 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 2.5em;
-    font-weight: bold;
+    font-size: 2.5rem;
+    font-weight: 900;
     letter-spacing: 2px;
     padding: 10px;
+    margin-bottom: 0;
+    text-transform: uppercase;
 }
 
-@media only screen and (max-width: 900px) {
+p {
+    margin: 0;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 1200px) {
     .btnStartScreen {
         width: 90%;
     }
 
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    button {
+        padding: 10px 60px;
+        font-size: 18px;
+    }
+
     h1 {
-        text-align: center;
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
     }
 }
 
-@media only screen and (max-width: 500px) {
-    .btnPush {
-        margin-right: 5px;
+@media (max-width: 768px) {
+    .logo {
+        width: 120px;
+        height: 120px;
     }
 
+    button {
+        padding: 10px 40px;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
 }
