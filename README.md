@@ -81,6 +81,12 @@ To get started with IoT Pump, follow these steps:
 
 ![](Screenshots/M3.png)
 
+### Executive side
+
+![](Screenshots/1.jpg)
+
+![](Screenshots/2.jpg)
+
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
